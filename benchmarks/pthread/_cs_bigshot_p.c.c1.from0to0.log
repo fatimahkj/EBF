@@ -1,0 +1,307 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking _cs_bigshot_p
+file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 398 function __VERIFIER_assert: function `__VERIFIER_error' is not declared
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Not unwinding loop thread2_0.0 iteration 1 (1 max) file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 456 function thread2_0 thread 0
+Not unwinding loop thread2_0.0 iteration 1 (1 max) file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 456 function thread2_0 thread 0
+size of program expression: 818 steps
+simple slicing removed 34 assignments
+Generated 3 VCC(s), 2 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+10649 variables, 20995 clauses
+Converting 0 assumptions
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.048s
+Building error trace
+
+Counterexample:
+
+State 33 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 532 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 34 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 534 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r0=2 (010)
+
+State 35 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 536 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 43 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 486 function main_thread thread 0
+----------------------------------------------------
+  __cs_var=&__cs_local_main_t1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 44 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 486 function main_thread thread 0
+----------------------------------------------------
+  __cs_size=4 (00000000000000000000000000000100)
+
+State 46 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 102 function __cs_init_scalar thread 0
+----------------------------------------------------
+  __cs_local_main_t1=0 (00000000000000000000000000000000)
+
+State 51 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 489 function main_thread thread 0
+----------------------------------------------------
+  __cs_var=&__cs_local_main_t2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 52 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 489 function main_thread thread 0
+----------------------------------------------------
+  __cs_size=4 (00000000000000000000000000000100)
+
+State 54 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 102 function __cs_init_scalar thread 0
+----------------------------------------------------
+  __cs_local_main_t2=0 (00000000000000000000000000000000)
+
+State 59 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 491 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=&__cs_local_main_t1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 60 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 491 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 61 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 491 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=thread1_0 (0000011000000000000000000000000000000000000000000000000000000000)
+
+State 62 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 491 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 63 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 491 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=1 (00000000000000000000000000000001)
+
+State 65 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_local_main_t1=1 (00000000000000000000000000000001)
+
+State 66 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[1]=1 (1)
+
+State 67 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[1]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 70 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 142 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000011100000000000000000000000000000000000000000000000000000000)
+
+State 77 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 495 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=&__cs_local_main_t2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 78 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 495 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 79 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 495 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=thread2_0 (0000100000000000000000000000000000000000000000000000000000000000)
+
+State 80 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 495 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 81 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 495 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=2 (00000000000000000000000000000010)
+
+State 83 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_local_main_t2=2 (00000000000000000000000000000010)
+
+State 84 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[2]=1 (1)
+
+State 85 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[2]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 88 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 142 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000011100000000000000000000000000000000000000000000000000000000)
+
+State 97 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 521 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 102 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 544 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 103 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 548 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r0=0 (0)
+
+State 105 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 553 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 106 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 555 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=0 (0000)
+
+State 110 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 559 function main thread 0
+----------------------------------------------------
+  __cs_param_thread1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 114 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 434 function thread1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 119 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 561 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=0 (000)
+
+State 120 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 567 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r0=3 (11)
+
+State 122 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 572 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 123 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 574 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=3 (0011)
+
+State 127 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 578 function main thread 0
+----------------------------------------------------
+  __cs_param_thread2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 129 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 448 function thread2_0 thread 0
+----------------------------------------------------
+  __cs_local_thread2___cs_tmp_if_cond_1=FALSE (00000000)
+
+State 135 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 475 function thread2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 140 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 580 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=3 (011)
+
+State 141 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 588 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r1=2 (010)
+
+State 143 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 593 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 144 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 595 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 156 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 521 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 161 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 603 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 162 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 609 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r1=1 (1)
+
+State 164 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 614 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 165 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 616 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=1 (0001)
+
+State 170 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 622 function main thread 0
+----------------------------------------------------
+  __cs_param_thread1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 203 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 420 function thread1_0 thread 0
+----------------------------------------------------
+  v=dynamic_object2 (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 207 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 434 function thread1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 212 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 624 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=1 (001)
+
+State 213 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 630 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r1=3 (11)
+
+State 215 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 635 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 216 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 637 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=3 (0011)
+
+State 221 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 643 function main thread 0
+----------------------------------------------------
+  __cs_param_thread2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 226 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 475 function thread2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 231 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 645 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=3 (011)
+
+State 232 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 649 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r2=5 (101)
+
+State 234 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 654 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 235 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 656 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=5 (0101)
+
+State 245 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 499 function main_thread thread 0
+----------------------------------------------------
+  __cs_id=1 (00000000000000000000000000000001)
+
+State 246 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 499 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=((void **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 253 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 503 function main_thread thread 0
+----------------------------------------------------
+  __cs_id=2 (00000000000000000000000000000010)
+
+State 254 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 503 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=((void **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+Violated property:
+  file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_bigshot_p.c line 507 function main_thread
+  assertion (! v) || (v[0] == 'B')
+  tmp_if_expr$1
+
+VERIFICATION FAILED

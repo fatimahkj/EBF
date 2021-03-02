@@ -1,0 +1,475 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking _cs_twostage_3
+file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 558 function funcB_0: function `__VERIFIER_error' is not declared
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 4797 steps
+simple slicing removed 1138 assignments
+Generated 4 VCC(s), 4 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+68780 variables, 164623 clauses
+Converting 0 assumptions
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.275s
+Building error trace
+
+Counterexample:
+
+State 58 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1127 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (000)
+
+State 59 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1129 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r0=6 (0110)
+
+State 60 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1131 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=6 (00110)
+
+State 65 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 679 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=1 (00000000000000000000000000000001)
+
+State 66 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 680 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 68 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 690 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_2=FALSE (00000000)
+
+State 89 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 724 function main_thread thread 0
+----------------------------------------------------
+  data1Lock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 109 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 726 function main_thread thread 0
+----------------------------------------------------
+  data2Lock=dynamic_object2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 112 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 730 function main_thread thread 0
+----------------------------------------------------
+  __cs_m=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 113 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 730 function main_thread thread 0
+----------------------------------------------------
+  __cs_val=((int *)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 114 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 182 function pthread_mutex_init thread 0
+----------------------------------------------------
+  dynamic_object1={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 117 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 730 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_err=0 (00000000000000000000000000000000)
+
+State 118 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 730 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_4=FALSE (00000000)
+
+State 122 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 746 function main_thread thread 0
+----------------------------------------------------
+  __cs_m=dynamic_object2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 123 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 746 function main_thread thread 0
+----------------------------------------------------
+  __cs_val=((int *)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 124 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 182 function pthread_mutex_init thread 0
+----------------------------------------------------
+  dynamic_object2={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 127 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 746 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_err=0 (00000000000000000000000000000000)
+
+State 128 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 746 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_5=FALSE (00000000)
+
+State 149 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 761 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_tPool=dynamic_object3 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 169 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 764 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_rPool=&dynamic_object4 (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 170 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 766 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=0 (00000000000000000000000000000000)
+
+State 174 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=dynamic_object3 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 175 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 176 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=funcA_0 (0000111000000000000000000000000000000000000000000000000000000000)
+
+State 177 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 178 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=1 (00000000000000000000000000000001)
+
+State 180 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  dynamic_object3[0]=1 (00000000000000000000000000000001)
+
+State 181 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[1]=1 (1)
+
+State 182 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[1]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 185 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 142 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000111100000000000000000000000000000000000000000000000000000000)
+
+State 189 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_err=0 (00000000000000000000000000000000)
+
+State 190 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 783 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_6=FALSE (00000000)
+
+State 192 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 800 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=1 (00000000000000000000000000000001)
+
+State 197 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=dynamic_object3 + 1 (0000001000000000000000000000000000000000000000000000000000000100)
+
+State 198 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 199 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=funcA_1 (0001000000000000000000000000000000000000000000000000000000000000)
+
+State 200 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 201 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=2 (00000000000000000000000000000010)
+
+State 203 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  dynamic_object3[POINTER_OFFSET(dynamic_object3 + 1) / 4]={ 1, 2 }[POINTER_OFFSET(dynamic_object3 + 1) / 4] (?)
+
+State 204 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[2]=1 (1)
+
+State 205 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[2]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 208 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 142 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000111100000000000000000000000000000000000000000000000000000000)
+
+State 212 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_err=0 (00000000000000000000000000000000)
+
+State 213 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 819 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_6=FALSE (00000000)
+
+State 215 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 836 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=2 (00000000000000000000000000000010)
+
+State 219 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 849 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=0 (00000000000000000000000000000000)
+
+State 224 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=&dynamic_object4 (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 225 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 226 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=funcB_0 (0001000100000000000000000000000000000000000000000000000000000000)
+
+State 227 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 228 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=3 (00000000000000000000000000000011)
+
+State 230 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  dynamic_object4=3 (00000000000000000000000000000011)
+
+State 231 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[3]=1 (1)
+
+State 232 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[3]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 235 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 142 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000111100000000000000000000000000000000000000000000000000000000)
+
+State 239 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_err=0 (00000000000000000000000000000000)
+
+State 240 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 868 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_7=FALSE (00000000)
+
+State 242 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 885 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=1 (00000000000000000000000000000001)
+
+State 247 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 934 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_i=0 (00000000000000000000000000000000)
+
+State 256 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1116 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 261 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1139 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=6 (0110)
+
+State 262 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1143 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r0=3 (011)
+
+State 264 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1148 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (001)
+
+State 265 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1150 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=3 (00011)
+
+State 269 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1154 function main thread 0
+----------------------------------------------------
+  __cs_param_funcA_param=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 273 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 408 function funcA_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_lock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 279 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 204 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  dynamic_object1={ 2, 0, 0, 0 } ({ 00000010, 00000000, 00000000, 00000000 })
+
+State 282 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 206 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  __cs_message="lock acquired" (0001001100000000000000000000000000000000000000000000000000000000)
+
+State 287 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 412 function funcA_0 thread 0
+----------------------------------------------------
+  data1Value=1 (00000000000000000000000000000001)
+
+State 291 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 416 function funcA_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_unlock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 293 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 217 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  dynamic_object1={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 296 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 219 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  __cs_message="lock released" (0001010000000000000000000000000000000000000000000000000000000000)
+
+State 305 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 442 function funcA_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 310 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1156 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=3 (0011)
+
+State 311 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1162 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r0=3 (011)
+
+State 313 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1167 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (010)
+
+State 314 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1169 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=3 (00011)
+
+State 318 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1173 function main thread 0
+----------------------------------------------------
+  __cs_param_funcA_param=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 322 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 452 function funcA_1 thread 0
+----------------------------------------------------
+  __cs_mutex_to_lock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 328 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 204 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  dynamic_object1={ 3, 0, 0, 0 } ({ 00000011, 00000000, 00000000, 00000000 })
+
+State 331 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 206 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  __cs_message="lock acquired" (0001001100000000000000000000000000000000000000000000000000000000)
+
+State 336 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 456 function funcA_1 thread 0
+----------------------------------------------------
+  data1Value=1 (00000000000000000000000000000001)
+
+State 340 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 460 function funcA_1 thread 0
+----------------------------------------------------
+  __cs_mutex_to_unlock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 342 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 217 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  dynamic_object1={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 345 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 219 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  __cs_message="lock released" (0001010000000000000000000000000000000000000000000000000000000000)
+
+State 354 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 486 function funcA_1 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 359 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1175 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=3 (0011)
+
+State 360 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1181 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t3_r0=9 (1001)
+
+State 362 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1186 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=3 (011)
+
+State 363 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1188 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[3]=9 (01001)
+
+State 367 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 1192 function main thread 0
+----------------------------------------------------
+  __cs_param_funcB_param=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 369 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 497 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB_t1=-1 (11111111111111111111111111111111)
+
+State 370 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 500 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB_t2=-1 (11111111111111111111111111111111)
+
+State 374 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 504 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_lock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 380 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 204 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  dynamic_object1={ 4, 0, 0, 0 } ({ 00000100, 00000000, 00000000, 00000000 })
+
+State 383 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 206 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  __cs_message="lock acquired" (0001001100000000000000000000000000000000000000000000000000000000)
+
+State 388 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 510 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB___cs_tmp_if_cond_0=FALSE (00000000)
+
+State 392 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 530 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB_t1=1 (00000000000000000000000000000001)
+
+State 396 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 534 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_unlock=dynamic_object1 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 398 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 217 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  dynamic_object1={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 401 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 219 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  __cs_message="lock released" (0001010000000000000000000000000000000000000000000000000000000000)
+
+State 408 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 538 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_lock=dynamic_object2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 414 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 204 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  dynamic_object2={ 4, 0, 0, 0 } ({ 00000100, 00000000, 00000000, 00000000 })
+
+State 417 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 206 function pthread_mutex_lock thread 0
+----------------------------------------------------
+  __cs_message="lock acquired" (0001001100000000000000000000000000000000000000000000000000000000)
+
+State 422 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 542 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB_t2=0 (00000000000000000000000000000000)
+
+State 426 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 546 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_mutex_to_unlock=dynamic_object2 (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 428 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 217 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  dynamic_object2={ 255, 255, 255, 255 } ({ 11111111, 11111111, 11111111, 11111111 })
+
+State 431 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 219 function pthread_mutex_unlock thread 0
+----------------------------------------------------
+  __cs_message="lock released" (0001010000000000000000000000000000000000000000000000000000000000)
+
+State 435 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 550 function funcB_0 thread 0
+----------------------------------------------------
+  __cs_local_funcB___cs_tmp_if_cond_1=TRUE (00000001)
+
+Violated property:
+  file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_twostage_3.c line 558 function funcB_0
+  assertion
+  FALSE
+
+VERIFICATION FAILED

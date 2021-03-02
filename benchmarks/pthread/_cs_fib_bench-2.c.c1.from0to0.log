@@ -1,0 +1,1788 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking _cs_fib_bench-2
+file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 105 function __cs_init_scalar: function `malloc' is not declared
+file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 664 function main_thread: function `__VERIFIER_error' is not declared
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+warning: implicit function declaration "malloc"
+old definition in module _cs_fib_bench-2 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 105 function __cs_init_scalar
+void * (void)
+new definition in module <built-in-library> file <builtin-library-malloc> line 4
+void * (unsigned long int malloc_size)
+
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 5789 steps
+simple slicing removed 86 assignments
+Generated 21 VCC(s), 20 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+58488 variables, 224135 clauses
+Converting 0 assumptions
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 6.808s
+Building error trace
+
+Counterexample:
+
+State 37 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 693 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 38 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 695 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r0=2 (010)
+
+State 39 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 697 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 44 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 45 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 49 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 627 function main_thread thread 0
+----------------------------------------------------
+  __cs_var=&__cs_local_main_id1 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 50 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 627 function main_thread thread 0
+----------------------------------------------------
+  __cs_size=4 (00000000000000000000000000000100)
+
+State 52 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 100 function __cs_init_scalar thread 0
+----------------------------------------------------
+  __cs_local_main_id1=0 (00000000000000000000000000000000)
+
+State 57 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 630 function main_thread thread 0
+----------------------------------------------------
+  __cs_var=&__cs_local_main_id2 (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 58 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 630 function main_thread thread 0
+----------------------------------------------------
+  __cs_size=4 (00000000000000000000000000000100)
+
+State 60 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 100 function __cs_init_scalar thread 0
+----------------------------------------------------
+  __cs_local_main_id2=0 (00000000000000000000000000000000)
+
+State 65 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 632 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=&__cs_local_main_id1 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 66 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 632 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 67 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 632 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=t1_0 (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 68 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 632 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 69 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 632 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=1 (00000000000000000000000000000001)
+
+State 71 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 134 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_local_main_id1=1 (00000000000000000000000000000001)
+
+State 72 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[1]=1 (1)
+
+State 73 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[1]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 76 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 83 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 636 function main_thread thread 0
+----------------------------------------------------
+  __cs_new_thread_id=&__cs_local_main_id2 (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 84 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 636 function main_thread thread 0
+----------------------------------------------------
+  __cs_attr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 85 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 636 function main_thread thread 0
+----------------------------------------------------
+  __cs_func=t2_0 (0000011000000000000000000000000000000000000000000000000000000000)
+
+State 86 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 636 function main_thread thread 0
+----------------------------------------------------
+  __cs_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 87 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 636 function main_thread thread 0
+----------------------------------------------------
+  __cs_threadID=2 (00000000000000000000000000000010)
+
+State 89 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 134 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_local_main_id2=2 (00000000000000000000000000000010)
+
+State 90 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 136 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_active_thread[2]=1 (1)
+
+State 91 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 138 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_threadargs[2]=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 94 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 140 function pthread_create_2 thread 0
+----------------------------------------------------
+  __cs_message="thread spawned" (0000010100000000000000000000000000000000000000000000000000000000)
+
+State 102 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 107 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 705 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 108 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 709 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r0=0 (000)
+
+State 110 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 714 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 111 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 716 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=0 (0000)
+
+State 115 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 720 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 125 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 130 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 722 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=0 (000)
+
+State 131 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 728 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r0=2 (010)
+
+State 133 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 733 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 134 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 735 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=2 (0010)
+
+State 138 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 739 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 140 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 512 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=0 (00000000000000000000000000000000)
+
+State 141 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 514 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=0 (00000000000000000000000000000000)
+
+State 143 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 522 function t2_0 thread 0
+----------------------------------------------------
+  j=2 (00000000000000000000000000000010)
+
+State 144 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 529 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=1 (00000000000000000000000000000001)
+
+State 152 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 157 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 741 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=2 (010)
+
+State 158 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 749 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r1=2 (010)
+
+State 160 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 754 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 161 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 756 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 166 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 167 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 174 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 179 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 764 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 180 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 770 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r1=2 (010)
+
+State 182 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 775 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 183 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 777 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=2 (0010)
+
+State 188 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 783 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 190 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 399 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=0 (00000000000000000000000000000000)
+
+State 191 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 401 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=0 (00000000000000000000000000000000)
+
+State 193 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 409 function t1_0 thread 0
+----------------------------------------------------
+  i=3 (00000000000000000000000000000011)
+
+State 194 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 416 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=1 (00000000000000000000000000000001)
+
+State 202 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 207 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 785 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=2 (010)
+
+State 208 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 791 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r1=3 (011)
+
+State 210 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 796 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 211 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 798 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=3 (0011)
+
+State 216 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 804 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 220 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 537 function t2_0 thread 0
+----------------------------------------------------
+  j=5 (00000000000000000000000000000101)
+
+State 221 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 544 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=2 (00000000000000000000000000000010)
+
+State 228 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 233 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 806 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=3 (011)
+
+State 234 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 814 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r2=2 (010)
+
+State 236 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 819 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 237 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 821 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 242 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 243 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 250 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 255 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 829 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 256 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 835 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r2=2 (010)
+
+State 258 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 840 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 259 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 842 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=2 (0010)
+
+State 264 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 848 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 274 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 279 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 850 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=2 (010)
+
+State 280 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 856 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r2=3 (011)
+
+State 282 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 861 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 283 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 863 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=3 (0011)
+
+State 288 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 869 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 298 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 303 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 871 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=3 (011)
+
+State 304 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 879 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r3=2 (010)
+
+State 306 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 884 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 307 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 886 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 312 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 313 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 320 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 325 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 894 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 326 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 900 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r3=3 (011)
+
+State 328 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 905 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 329 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 907 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=3 (0011)
+
+State 334 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 913 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 338 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 424 function t1_0 thread 0
+----------------------------------------------------
+  i=8 (00000000000000000000000000001000)
+
+State 339 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 431 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=2 (00000000000000000000000000000010)
+
+State 346 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 351 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 915 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=3 (011)
+
+State 352 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 921 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r3=4 (100)
+
+State 354 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 926 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 355 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 928 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 360 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 934 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 365 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 552 function t2_0 thread 0
+----------------------------------------------------
+  j=13 (00000000000000000000000000001101)
+
+State 366 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 559 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=3 (00000000000000000000000000000011)
+
+State 372 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 377 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 936 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 378 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 944 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r4=2 (010)
+
+State 380 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 949 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 381 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 951 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 386 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 387 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 394 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 399 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 959 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 400 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 965 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r4=3 (011)
+
+State 402 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 970 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 403 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 972 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=3 (0011)
+
+State 408 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 978 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 418 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 423 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 980 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=3 (011)
+
+State 424 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 986 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r4=4 (100)
+
+State 426 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 991 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 427 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 993 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 432 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 999 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 442 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 447 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1001 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 448 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1009 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r5=2 (010)
+
+State 450 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1014 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 451 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1016 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 456 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 457 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 464 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 469 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1024 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 470 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1030 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r5=3 (011)
+
+State 472 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1035 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 473 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1037 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=3 (0011)
+
+State 478 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1043 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 488 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 493 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1045 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=3 (011)
+
+State 494 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1051 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r5=4 (100)
+
+State 496 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1056 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 497 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1058 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 502 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1064 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 512 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 517 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1066 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 518 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1074 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r6=2 (010)
+
+State 520 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1079 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 521 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1081 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 526 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 527 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 534 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 539 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1089 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 540 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1095 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r6=3 (011)
+
+State 542 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1100 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 543 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1102 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=3 (0011)
+
+State 548 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1108 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 558 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 563 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1110 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=3 (011)
+
+State 564 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1116 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r6=4 (100)
+
+State 566 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1121 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 567 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1123 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 572 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1129 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 582 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 587 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1131 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 588 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1139 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r7=2 (010)
+
+State 590 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1144 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 591 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1146 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 596 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 597 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 604 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 609 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1154 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 610 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1160 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r7=4 (100)
+
+State 612 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1165 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 613 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1167 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=4 (0100)
+
+State 618 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1173 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 623 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 439 function t1_0 thread 0
+----------------------------------------------------
+  i=21 (00000000000000000000000000010101)
+
+State 624 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 446 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=3 (00000000000000000000000000000011)
+
+State 630 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 635 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1175 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=4 (100)
+
+State 636 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1181 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r7=4 (100)
+
+State 638 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1186 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 639 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1188 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 644 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1194 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 654 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 659 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1196 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 660 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1204 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r8=2 (010)
+
+State 662 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1209 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 663 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1211 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 668 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 669 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 676 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 681 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1219 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 682 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1225 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r8=4 (100)
+
+State 684 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1230 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 685 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1232 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=4 (0100)
+
+State 690 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1238 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 700 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 705 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1240 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=4 (100)
+
+State 706 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1246 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r8=4 (100)
+
+State 708 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1251 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 709 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1253 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=4 (0100)
+
+State 714 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1259 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 724 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 729 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1261 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=4 (100)
+
+State 730 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1269 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r9=2 (010)
+
+State 732 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1274 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 733 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1276 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 738 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 739 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 746 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 751 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1284 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 752 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1290 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r9=4 (100)
+
+State 754 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1295 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 755 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1297 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=4 (0100)
+
+State 760 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1303 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 770 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 775 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1305 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=4 (100)
+
+State 776 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1311 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r9=5 (101)
+
+State 778 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1316 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 779 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1318 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=5 (0101)
+
+State 784 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1324 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 790 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 567 function t2_0 thread 0
+----------------------------------------------------
+  j=34 (00000000000000000000000000100010)
+
+State 791 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 574 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=4 (00000000000000000000000000000100)
+
+State 796 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 801 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1326 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=5 (101)
+
+State 802 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1334 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r10=2 (010)
+
+State 804 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1339 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 805 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1341 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 810 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 811 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 818 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 823 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1349 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 824 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1355 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r10=5 (101)
+
+State 826 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1360 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 827 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1362 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=5 (0101)
+
+State 832 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1368 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 838 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 454 function t1_0 thread 0
+----------------------------------------------------
+  i=55 (00000000000000000000000000110111)
+
+State 839 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 461 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=4 (00000000000000000000000000000100)
+
+State 844 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 849 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1370 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=5 (101)
+
+State 850 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1376 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r10=7 (111)
+
+State 852 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1381 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 853 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1383 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 858 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1389 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 865 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 582 function t2_0 thread 0
+----------------------------------------------------
+  j=89 (00000000000000000000000001011001)
+
+State 866 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 589 function t2_0 thread 0
+----------------------------------------------------
+  __cs_local_t2_k=5 (00000000000000000000000000000101)
+
+State 873 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 878 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1391 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 879 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1399 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r11=2 (010)
+
+State 881 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1404 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 882 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1406 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 887 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 888 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 895 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 900 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1414 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 901 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1420 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r11=7 (111)
+
+State 903 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1425 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 904 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1427 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 909 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1433 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 916 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 469 function t1_0 thread 0
+----------------------------------------------------
+  i=144 (00000000000000000000000010010000)
+
+State 917 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 476 function t1_0 thread 0
+----------------------------------------------------
+  __cs_local_t1_k=5 (00000000000000000000000000000101)
+
+State 924 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 929 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1435 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 930 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1441 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r11=7 (111)
+
+State 932 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1446 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 933 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1448 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 938 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1454 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 948 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 953 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1456 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 954 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1464 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r12=2 (010)
+
+State 956 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1469 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 957 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1471 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 962 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 963 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 970 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 975 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1479 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 976 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1485 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r12=7 (111)
+
+State 978 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1490 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 979 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1492 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 984 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1498 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 994 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 999 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1500 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1000 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1506 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r12=7 (111)
+
+State 1002 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1511 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1003 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1513 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1008 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1519 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1018 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1023 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1521 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1024 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1529 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r13=2 (010)
+
+State 1026 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1534 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1027 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1536 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1032 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1033 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1040 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1045 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1544 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1046 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1550 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r13=7 (111)
+
+State 1048 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1555 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1049 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1557 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1054 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1563 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1064 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1069 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1565 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1070 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1571 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r13=7 (111)
+
+State 1072 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1576 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1073 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1578 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1078 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1584 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1088 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1093 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1586 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1094 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1594 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r14=2 (010)
+
+State 1096 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1599 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1097 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1601 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1102 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1103 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1110 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1115 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1609 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1116 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1615 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r14=7 (111)
+
+State 1118 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1620 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1119 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1622 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1124 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1628 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1134 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1139 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1630 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1140 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1636 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r14=7 (111)
+
+State 1142 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1641 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1143 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1643 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1148 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1649 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1158 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1163 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1651 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1164 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1659 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r15=2 (010)
+
+State 1166 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1664 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1167 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1666 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1172 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1173 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1180 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1185 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1674 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1186 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1680 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r15=7 (111)
+
+State 1188 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1685 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1189 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1687 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1194 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1693 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1204 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1209 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1695 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1210 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1701 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r15=7 (111)
+
+State 1212 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1706 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1213 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1708 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1218 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1714 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1228 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1233 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1716 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1234 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1724 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r16=2 (010)
+
+State 1236 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1729 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1237 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1731 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1242 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1243 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1250 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1255 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1739 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1256 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1745 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r16=7 (111)
+
+State 1258 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1750 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1259 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1752 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1264 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1758 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1274 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1279 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1760 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1280 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1766 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r16=7 (111)
+
+State 1282 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1771 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1283 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1773 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1288 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1779 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1298 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1303 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1781 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1304 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1789 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r17=2 (010)
+
+State 1306 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1794 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1307 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1796 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1312 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1313 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1320 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1325 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1804 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1326 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1810 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r17=7 (111)
+
+State 1328 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1815 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1329 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1817 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1334 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1823 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1344 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1349 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1825 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1350 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1831 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r17=7 (111)
+
+State 1352 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1836 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1353 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1838 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1358 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1844 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1368 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1373 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1846 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1374 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1854 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r18=2 (010)
+
+State 1376 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1859 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1377 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1861 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1382 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1383 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1390 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1395 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1869 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1396 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1875 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r18=7 (111)
+
+State 1398 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1880 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1399 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1882 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1404 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1888 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1414 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1419 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1890 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1420 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1896 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r18=7 (111)
+
+State 1422 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1901 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1423 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1903 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1428 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1909 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1438 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1443 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1911 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1444 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1919 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r19=2 (010)
+
+State 1446 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1924 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1447 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1926 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=2 (0010)
+
+State 1452 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1453 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1460 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 682 function main_thread thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1465 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1934 function main thread 0
+----------------------------------------------------
+  __cs_pc[0]=2 (010)
+
+State 1466 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1940 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t1_r19=7 (111)
+
+State 1468 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1945 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=1 (01)
+
+State 1469 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1947 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[1]=7 (0111)
+
+State 1474 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1953 function main thread 0
+----------------------------------------------------
+  __cs_param_t1_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1484 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 501 function t1_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1489 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1955 function main thread 0
+----------------------------------------------------
+  __cs_pc[1]=7 (111)
+
+State 1490 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1961 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t2_r19=7 (111)
+
+State 1492 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1966 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=2 (10)
+
+State 1493 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1968 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[2]=7 (0111)
+
+State 1498 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1974 function main thread 0
+----------------------------------------------------
+  __cs_param_t2_arg=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1508 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 614 function t2_0 thread 0
+----------------------------------------------------
+  __cs_value_ptr=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1513 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1976 function main thread 0
+----------------------------------------------------
+  __cs_pc[2]=7 (111)
+
+State 1514 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1980 function main thread 0
+----------------------------------------------------
+  __cs_tmp_t0_r20=4 (100)
+
+State 1516 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1985 function main thread 0
+----------------------------------------------------
+  __cs_thread_index=0 (00)
+
+State 1517 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 1987 function main thread 0
+----------------------------------------------------
+  __cs_pc_cs[0]=4 (0100)
+
+State 1522 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 621 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argc=0 (00000000000000000000000000000000)
+
+State 1523 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 622 function main_thread thread 0
+----------------------------------------------------
+  __cs_param_main_argv=((signed char **)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 1527 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 643 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_condI=1 (00000000000000000000000000000001)
+
+State 1529 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 652 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main_condJ=0 (00000000000000000000000000000000)
+
+State 1530 file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 658 function main_thread thread 0
+----------------------------------------------------
+  __cs_local_main___cs_tmp_if_cond_0=TRUE (00000001)
+
+Violated property:
+  file /media/sf_esbmc-falsi/sv-benchmarks/c/pthread/_cs_fib_bench-2.c line 664 function main_thread
+  assertion
+  !(__cs_local_main___cs_tmp_if_cond_0 != FALSE)
+
+VERIFICATION FAILED
