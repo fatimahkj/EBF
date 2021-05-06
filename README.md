@@ -44,4 +44,8 @@ For example:
 `    ./scripts/RunEBF.py -a 32 -s incr -p property-file/reach benchmarks/pthread/bigshot_p.c
 `
 
+A demonistration vedio of how to use the tool:
+
+[EBF Demonistration](https://video.manchester.ac.uk/faculties/eb93b3a8b5a268cd92d4a041fcd72231/9c174f87-532a-487a-b4a1-a2f166fef270/)
+
 Ps. The tool works perfectly on Ubuntu 18.4 running on macOS machine. Please, raise an issue if you have difficulty running the tool.
