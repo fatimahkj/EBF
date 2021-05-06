@@ -29,7 +29,7 @@ Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 [ESBMC LICENSE ](https://github.com/esbmc/esbmc/blob/master/COPYING)
 
 ## HOW TO RUN
-Before running the tool for the first time, please log in as root and temporarily modify as:
+Before running the tool for the first time, please log in as root and temporarily modify the core_pattern as:
 
 ` sudo echo core >/proc/sys/kernel/core_pattern
 `
