@@ -24,9 +24,9 @@ Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
  
 2. CBMC v 6.4.0 (For initial seed generation)
 
-[ESBMC TOOL URL](https://github.com/diffblue/cbmc)
+[CBMC TOOL URL](https://github.com/diffblue/cbmc)
 
-[ESBMC LICENSE ](https://github.com/diffblue/cbmc/blob/develop/LICENSE)
+[CBMC LICENSE ](https://github.com/diffblue/cbmc/blob/develop/LICENSE)
 
 ## HOW TO RUN
 Before running the tool for the first time, please log in as root and temporarily modify the core_pattern as:
