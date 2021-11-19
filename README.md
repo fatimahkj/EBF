@@ -2,7 +2,7 @@
 A Hybrid Verification Tool for Finding Software Vulnerabilities in IoT Cryptographic Protocols
 
 
-EBF is a tool that combines ESBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent applications and IoT Cryptographic Protocols.
+EBF is a tool that combines CBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent applications and IoT Cryptographic Protocols.
 EBF instrument the program under test using custom LLVM pass that track active threads and insert a delay function after instruction. 
 ## SYSTEM REQUIREMENTS:
 1. python v3
@@ -22,11 +22,11 @@ Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
  [AFL LICENSE ](http://lcamtuf.coredump.cx/afl/README.txt)
  
-2. ESBMC v 6.4.0 (For initial seed generation)
+2. CBMC v 6.4.0 (For initial seed generation)
 
-[ESBMC TOOL URL](https://github.com/esbmc/esbmc)
+[ESBMC TOOL URL](https://github.com/diffblue/cbmc)
 
-[ESBMC LICENSE ](https://github.com/esbmc/esbmc/blob/master/COPYING)
+[ESBMC LICENSE ](https://github.com/diffblue/cbmc/blob/develop/LICENSE)
 
 ## HOW TO RUN
 Before running the tool for the first time, please log in as root and temporarily modify the core_pattern as:
