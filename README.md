@@ -22,7 +22,7 @@ Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
  [AFL LICENSE ](http://lcamtuf.coredump.cx/afl/README.txt)
  
-2. CBMC v 6.4.0 (For initial seed generation)
+2. CBMC v 5.44.0 (For initial seed generation)
 
 [CBMC TOOL URL](https://github.com/diffblue/cbmc)
 
