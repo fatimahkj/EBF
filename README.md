@@ -1,5 +1,5 @@
 # EBF
-A Hybrid Verification Tool for Finding Software Vulnerabilities in IoT Cryptographic Protocols
+A Hybrid Verification Tool for Finding Software Vulnerabilities in IoT Concurent programs
 
 
 EBF is a tool that combines CBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent applications and IoT Cryptographic Protocols.
