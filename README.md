@@ -1,9 +1,8 @@
 # EBF
-A Hybrid Verification Tool for Finding Software Vulnerabilities in IoT Concurent programs
+An Esemble Verification Tool for Finding Software Vulnerabilities in IoT Concurent programs
 
 
-EBF is a tool that combines CBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent applications and IoT Cryptographic Protocols.
-EBF instrument the program under test using custom LLVM pass that track active threads and insert a delay function after instruction. 
+EBF is a tool that combines CBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
 ## SYSTEM REQUIREMENTS:
 1. python v3
 2. llvm clang 10
@@ -36,12 +35,12 @@ Before running the tool for the first time, please log in as root and temporaril
 
 To run the tool:
 
-`   ./scripts/RunEBF.py -a 32|64 -c -s strategy -p property-file benchmark 
+`   ./scripts/RunEBF.py -a 32|64 -c -p property-file benchmark 
 `
 
 For example:
 
-`    ./scripts/RunEBF.py -a 32 -s incr -p property-file/reach benchmarks/pthread/bigshot_p.c
+`    ./scripts/RunEBF.py -a 32 -p property-file/reach benchmarks/pthread/bigshot_p.c
 `
 
 A demonistration vedio of how to use the tool:
