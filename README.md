@@ -11,8 +11,15 @@ To Install clang-10 package for ubuntu-18.04:
 
 ` sudo apt-get install clang-tools-10
 `
+
 ## INSTALLATION:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
+
+Then install the depindencies :
+
+`EBF_LLVM_CONFIG=llvm-config LLVM_CC=clang LLVM_CXX=clang++ ./bootstrap.sh
+`
+
 
 ## SUPPORTING TOOLS:
 ## A) Fuzzing engine:
