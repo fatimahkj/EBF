@@ -1,0 +1,31 @@
+CPROVER is a framework of software analysis tools. See https://www.cprover.org/
+for further information about the tools, publications, and the pointers to
+source code.
+
+This archive contains the following files:
+
+- goto-cc: this C compiler transforms input files into so-called
+  "goto-binaries," which are encoded in CBMC's intermediate representation.
+
+- cbmc-binary: this is the actual verification tool. It takes a goto-binary or
+  source code as input and checks the properties specified by command-line
+  flags.
+
+- cbmc: this wrapper script invokes cbmc-binary and goto-cc, parsing the
+  property file to pass the correct flags to cbmc-binary and returning the
+  correct return codes for SV-COMP.
+
+The binaries were compiled on Ubuntu 18.04.5 LTS; the binaries
+should be self-hosting on similar operating systems.  The upstream URL, if
+you wish to compile it yourself, is https://github.com/diffblue/cbmc
+
+To use the tool, run the tool passing a source file as argument. For C source
+code, and as only installation requirement, make sure a C compiler (such as GCC)
+is installed.
+
+For SV-COMP, use the wrapper script provided in this distribution, which takes
+the following options:
+  <path(s)> to sources
+  --32 or --64: set the bit width
+  --propertyfile <file>: read SV-COMP property specification from <file>
+  --graphml-witness <file>: write SV-COMP witness to <file>
