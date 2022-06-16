@@ -15,14 +15,14 @@ To Install clang-10 package for ubuntu-18.04:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
 ## SUPPORTING TOOLS:
-## Fuzzing engine:
+## A) Fuzzing engine:
 
 1. afl++ (Apache License)
 
 [AFL TOOL URL](https://github.com/AFLplusplus/AFLplusplus )
 
  
-## BMC engine:
+## B) BMC engine:
 1. ESBMC (Apache License)
 
 [ESBMC TOOL URL](https://github.com/esbmc/esbmc)
