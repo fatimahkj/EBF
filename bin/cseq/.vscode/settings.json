@@ -1,0 +1,13 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.formatting.provider": "black",
+    "files.associations": {
+        "*.mtl": "html",
+        "limits": "c",
+        "*.tcc": "c"
+    },
+    "python.linting.enabled": true
+}

@@ -1,0 +1,141 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run benchmark (specific file - data races)",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "-i",
+                "${file}",
+                "--data-race-check"
+            ]
+        },
+        {
+            "name": "Run benchmark (specific file - reachability check)",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "-i",
+                "${file}",
+                "--reachability-check"
+            ]
+        },
+        {
+            "name": "fib_bench parallel test",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "--data-race-check",
+                "-i",
+                "examples/downloads/pthread/fib_bench-1.yml"
+            ]
+        },
+        {
+            "name": "Run benchmark (Omar's script - Data-race only)",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "--data-race-check",
+                "-p",
+                "examples/downloads/"
+            ],
+        },
+        {
+            "name": "Run benchmark (Omar's script - Full)",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "--data-race-check",
+                "--reachability-check",
+                "-p",
+                "examples/downloads/"
+            ]
+        },
+        {
+            "name": "Run benchmark (Omar's script - Reachability only)",
+            "type": "python",
+            "request": "launch",
+            "module": "sv-comp--test-parallel",
+            "args": [
+                "--reachability-check",
+                "-p",
+                "examples/downloads/"
+            ],
+        },
+        {
+            "name": "Try Parse",
+            "type": "python",
+            "request": "launch",
+            "module": "try_parse",
+            "args": [
+                "${file}"
+            ]
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "CSeq: Current File (w/datarace)",
+            "type": "python",
+            "request": "launch",
+            "module": "cseq",
+            "console": "integratedTerminal",
+            "args": [
+                "-i",
+                "${file}",
+                "--cex",
+                "--sv-comp",
+                "-D",
+                "--data-race-check",
+            ]
+        },
+        {
+            "name": "Lazy-CSeq: Current File",
+            "type": "python",
+            "request": "launch",
+            "module": "lazy-cseq",
+            "console": "integratedTerminal",
+            "args": [
+                "-i",
+                "${file}"
+            ]
+        },
+        {
+            "name": "CSeq: Custom run",
+            "type": "python",
+            "request": "launch",
+            "module": "cseq",
+            "console": "integratedTerminal",
+            "args": [
+                "-i",
+                "${file}",
+                "--data-race-check",
+                "--backend",
+                "cbmc",
+                "--32",
+                "--atomic-parameters",
+                "--deep-propagation",
+                "--nondet-condvar-wakeups",
+                "--contexts",
+                "9",
+                "--unwind",
+                "3",
+                "-D",
+                "--cex",
+            ]
+        }
+    ]
+}

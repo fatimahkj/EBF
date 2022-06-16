@@ -1,0 +1,31 @@
+# [current version]: Bit-precise discontinuity errors under fixed-point arithmetics (includes IFM 2020 and ICCPS 2017)
+# [IFM 2020]: Bit-precise (excl. division) error analysis under fixed-point arithmetics (includes ICCPS 2017)
+# [ICCPS 2017]: Basic safety analysis under fixed-point arithmetics.
+
+#TODO: add module here to check for error bitwidth vs. max. shift. and what else?
+unroller   # we do not require the program to be bounded
+
+
+# Transformation part I (new modules required to handle if-then-else statements)
+fpmath/newprecision
+fpmath/branch
+fpmath/branch2
+
+# Transformation part II
+fpmath/newrange
+fpmath/newcast
+fpmath/newfixedpoint
+fpmath/newd
+fpmath/newmacros
+###newprecisioncheck
+fpmath/newc
+
+# Instrumentation and backend stuff
+fpmath/newinstrumenter
+fpmath/new_mapper
+feeder
+fpmath/newcex_fixedpoint
+
+#TODO:
+# handle signed/unsigned operations properly.
+
