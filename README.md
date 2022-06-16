@@ -2,7 +2,7 @@
 An Esemble Verification Tool for Finding Software Vulnerabilities in IoT Concurent programs
 
 
-EBF is a tool that combines CBMC "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
+EBF is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
 ## SYSTEM REQUIREMENTS:
 1. python v3
 2. llvm clang 10
@@ -15,17 +15,30 @@ To Install clang-10 package for ubuntu-18.04:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
 ## SUPPORTING TOOLS:
-1. afl-2.52b (Fuzzing algorithm)
+## Fuzzing engine:
 
-[AFL TOOL URL](http://lcamtuf.coredump.cx/afl/ )
+1. afl++ (Apache License)
 
- [AFL LICENSE ](http://lcamtuf.coredump.cx/afl/README.txt)
+[AFL TOOL URL](https://github.com/AFLplusplus/AFLplusplus )
+
  
-2. CBMC v 5.44.0 (For initial seed generation)
+## BMC engine:
+1. ESBMC (Apache License)
+
+[ESBMC TOOL URL](https://github.com/esbmc/esbmc)
+
+2. CBMC v 5.44.0 (BSD 4-Clause License)
 
 [CBMC TOOL URL](https://github.com/diffblue/cbmc)
 
-[CBMC LICENSE ](https://github.com/diffblue/cbmc/blob/develop/LICENSE)
+3. CSEQ (BSD 3-Clause License)
+
+[CSEQ TOOL URL](http://www.southampton.ac.uk/~gp1y10/cseq/cseq.html)
+
+4. Deagle (GPLv3)
+
+[Deagle TOOL URL](https://github.com/thufv/Deagle)
+
 
 ## HOW TO RUN
 Before running the tool for the first time, please log in as root and temporarily modify the core_pattern as:
