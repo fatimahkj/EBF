@@ -25,9 +25,7 @@ then
     git clone --depth 1 https://github.com/AFLplusplus/AFLplusplus.git
     cd AFLplusplus
     LLVM_CONFIG=$EBF_LLVM_CONFIG CC=$LLVM_CC CXX=$LLVM_CXX make -j4
-    cd llvm_mode
-    LLVM_CONFIG=$EBF_LLVM_CONFIG CC=$LLVM_CC CXX=$LLVM_CXX make -j4
-    cd ../../..
+    cd ../..
 fi
 if [[ ! -d bin/esbmc ]]
     echo "Downloading and compiling ESBMC."
