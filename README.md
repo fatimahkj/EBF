@@ -12,6 +12,12 @@ To Install clang-11 package for ubuntu-18.04:
 ` sudo apt-get install clang-tools-11
 `
 
+3- To use Deagle you need bison and flex packages:
+
+`sudo apt-get install -y bison`
+
+`sudo apt-get -y install flex`
+
 ## INSTALLATION:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
