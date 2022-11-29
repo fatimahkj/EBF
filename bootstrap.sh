@@ -28,6 +28,7 @@ then
     cd ../..
 fi
 if [[ ! -d bin/esbmc ]]
+then
     echo "Downloading and compiling ESBMC."
     cd bin
     chmod +x ESBMC-Linux.sh 
