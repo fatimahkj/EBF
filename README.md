@@ -5,11 +5,11 @@ An Esemble Verification Tool for Finding Software Vulnerabilities in IoT Concure
 EBF is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
 ## SYSTEM REQUIREMENTS:
 1. python v3
-2. llvm clang 10
+2. llvm clang 11
 
-To Install clang-10 package for ubuntu-18.04:
+To Install clang-11 package for ubuntu-18.04:
 
-` sudo apt-get install clang-tools-10
+` sudo apt-get install clang-tools-11
 `
 
 ## INSTALLATION:
