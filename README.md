@@ -1,5 +1,5 @@
 # EBF
-An Esemble Verification Tool for Finding Software Vulnerabilities in IoT Concurent programs
+An Ensemble Verification Tool for Finding Software Vulnerabilities in Concurrent programs
 
 
 EBF is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
