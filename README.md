@@ -1,9 +1,15 @@
 # EBF
-An Ensemble Verification Tool for Finding Software Vulnerabilities in Concurrent programs
+EBF (Ensemble Bounded Model Checking - Fuzzing) is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs. In contrast with portfolios, which simply run all possible techniques in parallel, EBF strives to obtain closer cooperation between them.
+This goal is achieved in a black-box fashion. On the one hand, the model checkers are forced to provide seeds to the fuzzers by injecting additional vulnerabilities in the program under test. On the other hand, off-the-shelf fuzzers are forced to explore different interleavings by adding lightweight instrumentation and systematically re-seeding them.
+
+To compile and run EBF, please refer to the following system requirements and installation instructions. We recommend starting by reading some of the publications to gain a clear understanding of what this tool can offer, as outlined in references [1](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9955513) and [2](https://link.springer.com/chapter/10.1007/978-3-031-30820-8_33)
 
 
-EBF is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs.
-## SYSTEM REQUIREMENTS:
+## Architecture:
+
+
+
+## System Requirments:
 1. python v3
 2. llvm clang 11
 
@@ -18,16 +24,16 @@ To Install clang-11 package for ubuntu-18.04:
 
 `sudo apt-get -y install flex`
 
-## INSTALLATION:
+## Instalation:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
-Then install the depindencies :
+Then install the dependencies :
 
 `EBF_LLVM_CONFIG=llvm-config LLVM_CC=clang LLVM_CXX=clang++ ./bootstrap.sh
 `
 
 
-## SUPPORTING TOOLS:
+## Supporting engines:
 ## A) Fuzzing engine:
 
 1. afl++ (Apache License)
@@ -53,7 +59,7 @@ Then install the depindencies :
 [Deagle TOOL URL](https://github.com/thufv/Deagle)
 
 
-## HOW TO RUN
+## How to run
 Before running the tool for the first time, please log in as root and temporarily modify the core_pattern as:
 
 ` sudo echo core >/proc/sys/kernel/core_pattern
@@ -69,8 +75,7 @@ For example:
 `    ./scripts/RunEBF.py -a 32 -p property-file/reach benchmarks/pthread/bigshot_p.c
 `
 
-A demonistration vedio of how to use the tool:
+A demonstration video of how to use the tool:
 
 [EBF Demonistration](https://video.manchester.ac.uk/faculties/eb93b3a8b5a268cd92d4a041fcd72231/9c174f87-532a-487a-b4a1-a2f166fef270/)
 
-Ps. The tool is still under development and it works perfectly on Ubuntu 18.4 running on macOS machine. Please, raise an issue if you have difficulty running the tool.
