@@ -2,12 +2,16 @@
 EBF (Ensemble Bounded Model Checking - Fuzzing) is a tool that combines "Bounded Model Checking (BMC)" and AFL "Fuzzing" techniques to verify and detect security vulnerabilities in concurrent programs. In contrast with portfolios, which simply run all possible techniques in parallel, EBF strives to obtain closer cooperation between them.
 This goal is achieved in a black-box fashion. On the one hand, the model checkers are forced to provide seeds to the fuzzers by injecting additional vulnerabilities in the program under test. On the other hand, off-the-shelf fuzzers are forced to explore different interleavings by adding lightweight instrumentation and systematically re-seeding them.
 
-To compile and run EBF, please refer to the following system requirements and installation instructions. We recommend starting by reading some of the publications to gain a clear understanding of what this tool can offer, as outlined in references [1](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9955513) and [2](https://link.springer.com/chapter/10.1007/978-3-031-30820-8_33)
+To compile and run EBF, please refer to the following system requirements and installation instructions. We recommend starting by reading some of the publications to gain a clear understanding of what this tool can offer, as outlined in references [1](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9955513) and [2](https://link.springer.com/chapter/10.1007/978-3-031-30820-8_33).
 
 
 ## Architecture:
 
+<img width="1167" alt="Screenshot 2024-01-07 at 1 47 04 PM" src="https://github.com/fatimahkj/EBF/assets/47563480/bea4e63a-c8de-4ce7-a7af-1ebf40550215">
 
+
+## Features:
+EBF contains open source concurrency fuzzer that 
 
 ## System Requirments:
 1. python v3
