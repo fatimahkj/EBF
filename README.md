@@ -7,11 +7,31 @@ To compile and run EBF, please refer to the following system requirements and in
 
 ## Architecture:
 
+The figure below illustrates the current EBF architecture. The tool takes a C/C++ program as input and employs the BMC engine to perform safety proving up to a  'k'  bound. Then, we inject errors into the program during (stage 2), generating seeds (inputs) extracted from the BMC engine used in the fuzzing phase (stage 3). Finally, the results are aggregated to produce the final verdict, along with the generation of a witness file.
+
 <img width="1167" alt="Screenshot 2024-01-07 at 1 47 04 PM" src="https://github.com/fatimahkj/EBF/assets/47563480/bea4e63a-c8de-4ce7-a7af-1ebf40550215">
 
 
 ## Features:
-EBF contains open source concurrency fuzzer that 
+EBF contains an open-source concurrency fuzzer that verifies concurrent programs by injecting delays controlled randomly by the fuzzer. EBF can find different concurrency-related and memory-related bugs, such as: 
+
+**Memory-related**
+
+- User-specified assertion failures
+
+- Out-of-bounds array access
+
+- Illegal pointer dereferences
+
+- Memory leaks
+
+**Concurrency-related**
+
+- Deadlock 
+
+- Data race
+
+- Thread leak
 
 ## System Requirments:
 1. python v3
@@ -28,7 +48,7 @@ To Install clang-11 package for ubuntu-18.04:
 
 `sudo apt-get -y install flex`
 
-## Instalation:
+## Installation:
 Clone EBF package and make sure SYSTEM REQUIREMENTS are correctly satisfied.
 
 Then install the dependencies :
