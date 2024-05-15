@@ -47,7 +47,6 @@ def witnessFile():
             witness_file_name_BMC=os.path.join(CBMCwitness,"runCompiBMC.log")
     elif BMC_Engine=='ESBMC' or BMC_Engine=='CSEQ' or BMC_Engine=='DEAGLE':
             witness_file_name_BMC = os.path.join(witness_DIR + SEP +os.path.basename(C_FILE) + ".graphml")
-
     Graph = Generategraphml.ViolationGraph(C_FILE, PROPERTY_FILE, ARCHITECTURE, witness_DIR,witness_file_name_BMC,CORRECTNESS,BMC_Engine)
     if not CORRECTNESS:
         Graph.create_witness_from_tools(witness_DIR)

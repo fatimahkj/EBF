@@ -12,6 +12,10 @@ import xml.etree.cElementTree as ET
 from xml.etree.ElementTree import ElementTree
 from os import path
 from datetime import datetime
+from ast import literal_eval
+from pathlib import Path
+import hashlib
+
 SEP = os.sep
 EBF_SCRIPT_DIR = os.path.split(os.path.abspath(__file__))[0]
 EBF_DIR = os.path.split(EBF_SCRIPT_DIR)[0]
@@ -23,20 +27,20 @@ EBF_TESTCASE = EBF_DIR + SEP + "test-suite"
 EBF_EXEX = ''
 EBF_FUZZENGINE = EBF_DIR + SEP + "fuzzEngine"
 EBF_LIB = EBF_DIR + SEP + "lib"
-EBF_INSTRAMENTATION = EBF_LIB + SEP + "libMemoryTrackPass.so "
+EBFـINSTRUMENTATION = EBF_LIB + SEP + "libMemoryTrackPass.so "
+EBF_SEEDـINSTRUMENTATION=EBF_LIB+SEP+'EBF_instrument'
 EBF_BIN = EBF_DIR + SEP + "bin"
 CBMC = EBF_BIN + SEP + 'cbmc-sv'
-DEAGLE= EBF_BIN+SEP+'Deagle/src/cbmc'
-CSEQ= EBF_BIN+SEP+'cseq'
 EBF_LOG = ''
 AFL_DIR = ''
+BMC_Engine=''
 AflExexutableFile = ''
 witness_DIR = ''
+witness_DIR_reacherr=''
 versionInfo = EBF_DIR + SEP + "versionInfoFolder" + SEP + "versionInfo.txt"
 start_time = 0
 PROPERTY_FILE = ""
 C_FILE = ''
-c_file_i = ''
 VERSION = ''
 STRATEGY_FILE = ""
 ARCHITECTURE = ""
@@ -44,29 +48,28 @@ RUN_LOG = ""
 VALIDATOR_DIR = ""
 VALIDATOR_PROP = ""
 preprocessed_c_file = ""
-EXTRAC=''
 CONCURRENCY = False
 isValidateTestSuite = False
 correction_witness = ''
 Tsanitizer = " -fsanitize=thread  "
-Usanitizer = "-fsanitize=address  "
-Compiler = " clang-10 "
+Usanitizer = " -fsanitize=address  "
+Compiler = " clang-11 "
 AFL_COMPILER_DIR = EBF_FUZZENGINE + SEP + "AFLplusplus"
 AFL_Bin = AFL_COMPILER_DIR + SEP + "./afl-clang-fast"
 AFL_FUZZ_Bin = AFL_COMPILER_DIR + SEP + "afl-fuzz "
 Optimization = " -g  "
-Compile_Flag = " -Xclang -load -Xclang "  # -std=gnu89
-TIMEOUT_AFL = ''  # kill if fuzzer reaches 420 s
-TIMEOUT_TSAN = 40
-TIMEOUT_BMC =''
-seed = 10
-MAX_VIRTUAL_MEMORY_BMC = ''  # 10 GB
-MAX_VIRTUAL_MEMORY_AFL=''
+Compile_Flags = " -Xclang -load -Xclang "  # -std=gnu89
+TIMEOUT_AFL = 50  # kill if fuzzer reaches 420 s
+TIMEOUT_TSAN = 40#for esbmc 432, fuzzer 400 s and esbmc 9 m
+timeout =650
+seed = datetime.now().timestamp()
+MAX_VIRTUAL_MEMORY = 10000000000  # 10 GB
 pre_C_File = ''
 PARALLEL_FUZZ = ''
-BMC_Engine=''
 found_event=Event()
-finished_process=0
+
+# Define colors used in printing messages throughout the script.
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -81,12 +84,14 @@ class bcolors:
     EndG = '\x1b[0m'
 
 
+# Create log files and open them for writing the verification engine outputs.
 def startLogging():
     global RUN_LOG, RUN_STATUS_LOG
     RUN_LOG = open(EBF_LOG + SEP + "run.log", 'w+')
     RUN_STATUS_LOG = open(EBF_LOG + SEP + "runError.log", 'w+')
 
 
+# print the header content once the tool starts.
 def HeaderContent():
     global versionInfo, VERSION
     print(f"{bcolors.WARNING}\n\n ****************** Running EBF Hybrid Tool ****************** \n\n{bcolors.ENDC}")
@@ -98,54 +103,31 @@ def HeaderContent():
         exitMessage = " Version Info File Is Not EXIST."
         print(exitMessage)
 
+# This function used to print log word when each stage is Done.
 def printLogWord(logWord):
     print(logWord + "... " + f"{bcolors.OKGREEN}  Done{bcolors.ENDC}\n\n")
 
-
+# Create a command line needed from the user when starting the tool
 def processCommandLineArguements():
-    global C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, c_file_i, versionInfo, VERSION, OUTDIR, AFL_DIR, PARALLEL_FUZZ,BMC_Engine,EXTRA,TIMEOUT_BMC,TIMEOUT_AFL,MAX_VIRTUAL_MEMORY_AFL,MAX_VIRTUAL_MEMORY_BMC
+    global C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, category_property,CONCURRENCY, versionInfo, VERSION, OUTDIR, AFL_DIR, PARALLEL_FUZZ,BMC_Engine
     parser = argparse.ArgumentParser(prog="EBF", description="Tool for detecting concurrent and memory corruption bugs")
-    parser.add_argument("-v", '--version', action='version', version='4.0.0')
+    parser.add_argument("-v", '--version', action='version', version='3.0.0')
     parser.add_argument("benchmark", nargs='?', help="Path to the benchmark")
-    parser.add_argument("-i", "--path", type=dir_path, nargs="+", help="Include Paths needed for compiling the benchmarks,  Multiple paths should be separated with spaces.",)
     parser.add_argument('-p', "--propertyfile", required=True, help="Path to the property file")
     parser.add_argument("-a", "--arch", help="Either 32 or 64 bits", type=int, choices=[32, 64], default=32)
-    parser.add_argument("-t","--timeout",nargs="*", action="store", help= "Set Timelimit for BMC and Fuzzing respectively separated with spaces in SECOND" ,type=check_positive)
-    parser.add_argument("-vm","--memory",nargs="*", action="store", help= "Set Max memory for BMC and Fuzzing respectively separated with spaces in MB" ,type=check_positive)
     parser.add_argument("-c", "--concurrency", help="Set concurrency flag", action='store_true')
     parser.add_argument("-m", "--parallel", help="Set fuzzengine parallel flag ", action='store_true')
     parser.add_argument( "-bmc", help="Set BMC engine", choices=["ESBMC", "CBMC", "CSEQ","DEAGLE"],
                         default="ESBMC")
+
     args = parser.parse_args()
     PROPERTY_FILE = args.propertyfile
     C_FILE = args.benchmark
-    c_file_i = C_FILE
     ARCHITECTURE = args.arch
     CONCURRENCY = args.concurrency
     PARALLEL_FUZZ = args.parallel
     BMC_Engine = args.bmc
-    EXTRA = args.path
-    TIMEOUT=args.timeout
-    MEMORY=args.memory
-    if TIMEOUT is not None and len(args.timeout) not in (0, 2):
-        parser.error('Either give no values for action, or two, not {}.'.format(len(args.timeout)))
-    if TIMEOUT:
-        TIMEOUT_BMC=TIMEOUT[0]
-        TIMEOUT_AFL=TIMEOUT[1]
-    else:
-        TIMEOUT_BMC=500
-        TIMEOUT_AFL=200
-    if MEMORY is not None and len(args.memory) not in (0, 2):
-        parser.error('Either give no values for action, or two, not {}.'.format(len(args.memory)))
-    if MEMORY:
-        if len(str(MEMORY[0])) < 8 or len(str(MEMORY[1])) <8:
-            parser.error("Virtual MEmory limit is too low, please consider increasing the limit")
-    if MEMORY:
-        MAX_VIRTUAL_MEMORY_BMC=MEMORY[0]
-        MAX_VIRTUAL_MEMORY_AFL=MEMORY[1]
-    else:
-        MAX_VIRTUAL_MEMORY_BMC=100000000
-        MAX_VIRTUAL_MEMORY_AFL=500000000
+
     if C_FILE is None:
         exitMessage = " C File is not found. Please Rerun the Tool with Appropriate Arguments."
         sys.exit(exitMessage)
@@ -154,38 +136,42 @@ def processCommandLineArguements():
         sys.exit(exitMessage)
     cFileName = os.path.basename(C_FILE)
     fileBase, fileExt = os.path.splitext(cFileName)
-    # Validate input file name
     if (not (fileExt == ".i" or fileExt == ".c")):
-        message = " Invalid input file, The input file should be a C file"
+        message = " Invalid input file, The input file should be a .c or .i file"
         sys.exit(message)
+    f = open(PROPERTY_FILE, 'r')
+    property_file_content = f.read()
+    f = open(PROPERTY_FILE, 'r')
+    property_file_content = f.read()
+    category_property = 0
+    if "CHECK( init(main()), LTL(G valid-free) )" in property_file_content:
+      category_property = "memory"
+    elif "CHECK( init(main()), LTL(G ! overflow) )" in property_file_content:
+      category_property = "overflow"
+    elif "CHECK( init(main()), LTL(G ! call(reach_error())) )" in property_file_content:
+      category_property = "reach"
+    elif "CHECK( init(main()), LTL(G ! data-race) )" in property_file_content:
+      category_property = "datarace"
+    elif "CHECK( init(main()), LTL(G valid-memcleanup) )" in property_file_content:
+      category_property = "memcleanup"
+    else:
+      print("Unsupported Property")
+      exit(1)
+        
     return args
 
-def dir_path(str_path: str):
-    for quote in ['"', "'"]:
-        if str_path.startswith(quote):
-            str_path = str_path[1:-1]
-    if str_path.startswith('~'):
-        str_path = os.path.expanduser(str_path)
-    if os.path.isdir(str_path):
-        return str_path
-    if os.path.isfile(str_path):
-        return str_path
-    raise NotADirectoryError(str_path)
-
-def check_positive(value):
-    ivalue = int(value)
-    if ivalue <= 0:
-        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
-    return ivalue
-
+# Create a random string used for testcases file. 
 def getRandomAlphanumericString():
-    letters_and_digits = string.ascii_lowercase + string.digits
-    result_str = ''.join((random.choice(letters_and_digits) for i in range(20)))
+    letters_and_digits = string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(3)))
     return result_str
+ 
 
-
+# This function will initialize all the Directory needed for EBF.
 def initializeDir():
-    global EBF_CORPUS, OUTDIR, EBF_LOG, EBF_EXEX, witness_DIR, AFL_DIR, C_FILE
+    global EBF_CORPUS, OUTDIR, EBF_LOG, EBF_EXEX, witness_DIR, AFL_DIR, C_FILE,witness_DIR_reacherr
+    if os.path.isdir(OUTDIR):
+        shutil.rmtree(OUTDIR)
     if not os.path.isdir(OUTDIR):
         os.mkdir(OUTDIR)
     if not os.path.isdir(OUTDIR):
@@ -196,25 +182,25 @@ def initializeDir():
             OUTDIR = tmpOutputFolder
             os.mkdir(OUTDIR)
             break
-    EBF_CORPUS = OUTDIR + SEP + 'CORPUS' + '_' + os.path.basename(C_FILE) + '_' + str(getRandomAlphanumericString())
+    EBF_CORPUS = OUTDIR + SEP + 'CORPUS' + '_' + os.path.basename(C_FILE) 
     if os.path.exists(EBF_CORPUS):
         shutil.rmtree(EBF_CORPUS)
     os.mkdir(EBF_CORPUS)
-    witness_DIR = OUTDIR + SEP + 'witness-File' + '_' + os.path.basename(C_FILE) + '_' + str(
-        getRandomAlphanumericString())
+    witness_DIR = OUTDIR + SEP + 'witness-File' + '_' + os.path.basename(C_FILE) 
     if os.path.exists(witness_DIR):
         shutil.rmtree(witness_DIR)
     os.mkdir(witness_DIR)
-    EBF_EXEX = OUTDIR + SEP + "Executable-Dir" + '_' + os.path.basename(C_FILE) + '_' + str(
-        getRandomAlphanumericString())  # Executable path
+    witness_DIR_reacherr=witness_DIR+SEP+'witness-File-reacherr'
+    os.mkdir(witness_DIR_reacherr)
+    EBF_EXEX = OUTDIR + SEP + "Executable-Dir" + '_' + os.path.basename(C_FILE)
     if os.path.exists(EBF_EXEX):
         shutil.rmtree(EBF_EXEX)
     os.mkdir(EBF_EXEX)
-    EBF_LOG = OUTDIR + SEP + "log-files" + '_' + os.path.basename(C_FILE) + '_' + str(getRandomAlphanumericString())
+    EBF_LOG = OUTDIR + SEP + "log-files" + '_' + os.path.basename(C_FILE) 
     if os.path.exists(EBF_LOG):
         shutil.rmtree(EBF_LOG)
     os.mkdir(EBF_LOG)
-    AFL_DIR = OUTDIR + SEP + "AFL-Results" + '_' + os.path.basename(C_FILE) + '_' + str(getRandomAlphanumericString())
+    AFL_DIR = OUTDIR + SEP + "AFL-Results" + '_' + os.path.basename(C_FILE) 
     if os.path.exists(AFL_DIR):
         shutil.rmtree(AFL_DIR)
     os.mkdir(AFL_DIR)
@@ -225,28 +211,110 @@ def RunBMCEngine():
     print('\n\n')
     printLogWord(logWord)
     if BMC_Engine == 'CBMC':
-        GenerateInitialSeedCBMC()
+        message = "\n\n CBMC is not supported in this version "
+        print(message)
+        exit(0)
     elif BMC_Engine =='ESBMC':
-        GenerateInitialSeedESBMC()
+        GenerateInitialSeedBMC()
     elif BMC_Engine == 'CSEQ':
-        GenerateInitialSeedCSEQ()
+        message = "\n\n CSEQ is not supported in this version "
+        print(message)
+        exit(0)
     elif BMC_Engine == 'DEAGLE':
-        GenerateInitialSeedDEAGLE()
+        message = "\n\n DEAGLE is not supported in this version "
+        print(message)
+        exit(0)
+
+# This function is for assert 0 instrumentation, it will check first which category, we only support 
+# reachability in this script. then we run the fusebmc instrumentation with appropriate flags to 
+# get the goals and the number of the goals. 
+# Then we pass the number of goals generated with the instrumented files (contains goal label).
+def initial_analyze():
+    global C_FILE,EBF_EXEX,category_property
+    if category_property=="reach":
+            #instrument the c file with _reach errors to generate seeds.
+        print("\n\nInstrumenting the program with different goals")
+        seeds_generation=EBF_SEEDـINSTRUMENTATION+SEP+'./FuSeBMC_instrument'
+        seed_flags=" --add-labels --add-label-after-loop --add-goal-at-end-of-func "
+        instrumented = os.path.splitext(os.path.basename(C_FILE))[0] + "_asserts.c"
+        NumberOfGoals2='theGoalsFile.txt'
+        if (not (os.path.isfile(seeds_generation))):
+            message = "\n\n Instrumentation binary is NOT exists!! "
+            print(message)
+            exit(0)
+        RunInstraForSeed=seeds_generation+' '+'--output '+instrumented+' ' +'--input'+' '+ C_FILE + ' '+seed_flags + ' --goal-output-file '+ NumberOfGoals2+' --check-concurrency ' 
+
+        file = open(EBF_LOG + SEP + "runinstra.log", "w")
+        file_err = open(EBF_LOG + SEP + "runErrorinstra.log", "w")
+        try: 
+            p = subprocess.run(RunInstraForSeed,stdout=file,stderr=file_err,shell=True,preexec_fn=limit_virtual_memory) #bufsize=1
+            if path.exists(NumberOfGoals2):
+                shutil.move(NumberOfGoals2,EBF_EXEX+SEP+NumberOfGoals2)
+            if path.exists(instrumented):
+                shutil.move(instrumented,EBF_EXEX+SEP+instrumented)
+        except:
+            print('we could not generate instrumentation files\n')
+            exit(0)
+        # opening the text file
+        with open(EBF_EXEX+SEP+NumberOfGoals2,'r') as file:
+    # reading each line    
+            for line in file:
+        # reading each word # number of goals       
+                for word in line.split():         
+                    GoalNumber=word
+        # Adding elements to the List
+        # using Iterator
+        GoalList=[]
+        for i in range(1, int(GoalNumber)+1):
+            GoalList.append(i)
+        print("\n\nFile contains ",GoalNumber, " goals")
+        addGoals(EBF_EXEX+SEP+instrumented,GoalList)
+    else:
+        return
 
 
-def limit_virtual_memory():
-    global MAX_VIRTUAL_MEMORY_BMC
-    resource.setrlimit(resource.RLIMIT_AS, (MAX_VIRTUAL_MEMORY_BMC, resource.RLIM_INFINITY))
 
+# This function will change each goal by reach_error function. 
+# First, we will set the MAX time for all the goal to be run, 
+# Second, we randomly chose the number of goal and change it to reach_error and save the file. 
+# Third, we pass the file and the goal number associated with it to runBMCForSeedGenerationONLY Function.
 
+def addGoals(instrumented_file,GoalList):
+    Max_number_goals=GoalList
+    seconds=150
+    end_time = time.time() + seconds
+    time_out=time.time() < end_time
+    for i in range(len(GoalList)):
+        if time.time() < end_time:
+            goal_choice=random.choice(GoalList)
+            goalword="GOAL_"+str(goal_choice)+":;"
+            print("\n\nAdding reach error in goal ",goal_choice," to the file to generate BMC seeds ")
+            reach_error_Cfile = os.path.splitext(os.path.basename(C_FILE))[0] + "_"+str(goal_choice)+"_reach.c"
+            instrumented_reach_error=EBF_EXEX+SEP+reach_error_Cfile
+            #print("file name ==",instrumented_reach_error)
+            fin = open(instrumented_file, "rt")
+            #output file to write the result to
+            fout = open(instrumented_reach_error, "wt")
+            #for each line in the input file
+            for line in fin:
+	        #read replace the string and write to output file
+	            fout.write(line.replace(goalword, 'reach_error();'))
+            #close input and output files
+            fin.close()
+            fout.close()
+            GoalList.remove(goal_choice)
+            runBMCForSeedGenerationONLY(instrumented_reach_error,goal_choice)
+        else:
+            print("\n\nWe exceed the time allocated for seed generation"+"\n\nWe are exiting the seed genertion")
+            break
+    
 
-def limit_virtual_memory_AFL():
-    global MAX_VIRTUAL_MEMORY_AFL
-    resource.setrlimit(resource.RLIMIT_AS, (MAX_VIRTUAL_MEMORY_AFL, resource.RLIM_INFINITY))
-
-def GenerateInitialSeedESBMC():
-    global startTime, C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR,process,main_process
-    InputGenerationPath = EBF_SCRIPTS + SEP + "esbmc-wrapper.py"
+# This function will run ESBMC for seed generation only. It receives the file that contains the reach error.
+# it will pass the directory where we saved the instrumented file
+def runBMCForSeedGenerationONLY(reacherror_CFILE,goal_choice):
+    #TODO you can make different wrapper for it. If you use ESBMC for the results and --compact-trace is affecting you can remove it.
+    global startTime, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR_reacherr,process,main_process,C_FILE
+    InputGenerationPath = EBF_SCRIPTS + SEP + "esbmc-wrapper_ass.py"
     if (not (os.path.isfile(InputGenerationPath))):
         message = "Generating Input file is Not Exists!! "
         print(message)
@@ -254,79 +322,89 @@ def GenerateInitialSeedESBMC():
     concurrency_arg = ' -c '
     STRATEGY_FILE = ' incr '
     EBFRunCmd = "python3 " + InputGenerationPath + concurrency_arg + " -p " + PROPERTY_FILE + " -s " + STRATEGY_FILE + " -a " + str(
-        ARCHITECTURE) + ' -w ' + witness_DIR + " " + C_FILE + " -t "+ str(TIMEOUT_BMC) +" -m "+str(MAX_VIRTUAL_MEMORY_BMC)+  " 1> " + EBF_LOG + SEP + "runCompiBMC.log" + " 2> " + EBF_LOG + SEP + "runErrorBMC.log"
+        ARCHITECTURE) + " " + reacherror_CFILE +' -w ' + witness_DIR_reacherr+ " 1> " + EBF_LOG + SEP + "runCompiReacherrorBMC.log" + " 2> " + EBF_LOG + SEP + "runErrorReacherrorBMC_.log"
     os.system(EBFRunCmd)
+    ConvertInitialSeed_reacherr(witness_DIR_reacherr,goal_choice)
 
 
 
-def GenerateInitialSeedCBMC():
-    global startTime, C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR, CBMC
-    cwd = os.getcwd()
-    abs_PROPERTY_FILE = os.path.abspath(PROPERTY_FILE)
-    abs_C_FILE = os.path.abspath(C_FILE)
-    cbmc_binary = "./cbmc"
-    checkCBMC = os.path.join(CBMC, cbmc_binary)
-    if (not (os.path.isfile(checkCBMC))):
-        message = "Generating Input file is Not Exists!! "
-        print(message)
-    os.chdir(CBMC)
-    STRATEGY_FILE = '  '
-    witness_BMC_file_name = witness_DIR + SEP + os.path.basename(C_FILE) + ".graphml "
-    arch = "64"
-    EBFRunCmd = "CBMC_timeout="+str(TIMEOUT_BMC)+" "+ cbmc_binary + " --propertyfile " + abs_PROPERTY_FILE + " --" + str(
-        arch) + ' --graphml-witness  ' + witness_BMC_file_name + " " + abs_C_FILE + " 1> " + EBF_LOG + SEP + "runCompiBMC.log" + " 2> " + EBF_LOG + SEP + "runErrorBMC.log"
-    os.system(EBFRunCmd)
-    os.chdir(cwd)
+# This Function will convert ESBMC witness file to seeds for AFL++ 
+def ConvertInitialSeed_reacherr(witness_File_DIR,goal_choice):
+    global EBF_DIR, EBF_TESTCASE, EBF_CORPUS, witness_DIR,C_FILE
+    list = []
+    testcase2 = witness_File_DIR + SEP + os.path.splitext(os.path.basename(C_FILE))[0] + "_"+str(goal_choice)+"_reach.c.graphml"
+    if (not (os.path.isfile(testcase2) == True)):
+        logWord = "Proceeding"
+        printLogWord(logWord)
+    else:
+        testcase_xml = ET.parse(testcase2)
+        root = testcase_xml.getroot()
+        for x in root:
+            for child in x:
+                for item in child:
+                    if item.attrib['key'] == 'startline':
+                        startLine = int(item.text)
+                    elif item.attrib['key'] == 'assumption':
+                        assumption = item.text
+                        try:
+                            var, right = assumption.split("=")
+                            strip1=var.strip()
+                            if strip1=="threadid":
+                                continue
+                            left, _ = right.split(";")
+                            Item=left.strip()
+                            list.append(int(Item))
+                        except:
+                            pass
+        if len(list) == 0:
+            return
+        #count = 1
+        print("list",list)
+        new_list=[]
+        # Create bytearray
+        # (sequence of values in binary form)
+        # ASCII for A,B,C,D
+        for item in list:
+            bytesval=item.to_bytes(16, byteorder='big',signed=True) 
+            new_list.append(bytesval) 
+        #print("bytesvaltss",new_list)
+        # Bytearray can be cast to bytes
+        # Write bytes to file
+        with open(os.path.join(EBF_CORPUS, 'id-' + getRandomAlphanumericString()), "wb") as output:
+            output.write(bytesval)
+            #count += 1
 
-def GenerateInitialSeedCSEQ():
-    global startTime, C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR, CSEQ
+
+
+# This function run ESBMC to the original PUT without reach_error 
+def GenerateInitialSeedBMC():
+    global startTime, C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR
+
+    logWord = "Generating Seed Inputs"
+    print('\n\n')
+    printLogWord(logWord)
     # Get the current working directory
-    InputGenerationPath = CSEQ + SEP + "./lazy-cseq.py"
+    #this wrapper has set the time and memory internally
+    InputGenerationPath = EBF_SCRIPTS + SEP + "esbmc-wrapper1.py"
     if (not (os.path.isfile(InputGenerationPath))):
         message = " Generating Input file is Not Exists!! "
         print(message)
-    cwd = os.getcwd()
-    abs_PROPERTY_FILE = os.path.abspath(PROPERTY_FILE)
-    abs_C_FILE = os.path.abspath(C_FILE)
-    cseqbinary = './lazy-cseq.py'
-    os.chdir(CSEQ)
-    witness_BMC_file_name = witness_DIR + SEP + os.path.basename(C_FILE) + ".graphml "
-    EBFRunCmd = "timeout -k 2s " + str(
-        TIMEOUT_BMC) + " " + cseqbinary + ' --spec ' + abs_PROPERTY_FILE + '  --witness '+witness_BMC_file_name + " --input "+ abs_C_FILE
-    file = open(EBF_LOG + SEP + "runCompiBMC.log", "w")
-    file_err = open(EBF_LOG + SEP + "runErrorBMC.log", "w")
-    p = subprocess.Popen(EBFRunCmd, shell=True, stdout=file, stderr=file_err, universal_newlines=True,
-                         preexec_fn=limit_virtual_memory)
-    p.communicate()
-    os.chdir(cwd)
+    concurrency_arg = " -c " if CONCURRENCY else ""
+    concurrency_arg = ' -c '
+    STRATEGY_FILE = ' incr '
+    EBFRunCmd = "python3 " + InputGenerationPath + concurrency_arg + " -p " + PROPERTY_FILE + " -s " + STRATEGY_FILE + " -a " + str(
+        ARCHITECTURE) + ' -w ' + witness_DIR + " " + C_FILE + " 1> " + EBF_LOG + SEP + "runCompiBMC.log" + " 2> " + EBF_LOG + SEP + "runErrorBMC.log"
+    os.system(EBFRunCmd)
 
 
 
-def GenerateInitialSeedDEAGLE():
-    global startTime, C_FILE, PROPERTY_FILE, STRATEGY_FILE, ARCHITECTURE, CONCURRENCY, witness_DIR, DEAGLE,MAX_VIRTUAL_MEMORY_BMC
-    InputGenerationPath = DEAGLE+SEP+"./deagle"
-    if(not(os.path.isfile(InputGenerationPath))):
-        message = " Generating Input file is Not Exists!! "
-        print(message)
-    witness_BMC_file_name = witness_DIR + SEP + os.path.basename(C_FILE) + ".graphml"
-    EBFRunCmd = "timeout -k 2s "+str(TIMEOUT_BMC)+  " " + InputGenerationPath + ' --' + str(
-         ARCHITECTURE) +  '  --no-unwinding-assertions --closure  '+  " " + C_FILE
-    file= open(EBF_LOG + SEP + "runCompiBMC.log", "w")
-    file_err= open(EBF_LOG + SEP + "runErrorBMC.log", "w")
-    p = subprocess.Popen(EBFRunCmd,shell=True,stdout= file, stderr=file_err , universal_newlines=True, preexec_fn=limit_virtual_memory)
-    p.communicate()
-    if os.path.exists(EBF_DIR+SEP+'yogar-tmp'):
-        shutil.rmtree(EBF_DIR+SEP+'yogar-tmp')
-    if path.exists(EBF_DIR+SEP+'witness.graphml'):
-        shutil.move(EBF_DIR+SEP+'witness.graphml', witness_BMC_file_name)
-
-
-def ConvertInitialSeed():
-    global EBF_DIR, EBF_TESTCASE, EBF_CORPUS, witness_DIR
+# This function will convert ESBMC witness file to seeds for AFL
+def ConvertInitialSeed(witness_DIR):
+    global EBF_DIR, EBF_TESTCASE, EBF_CORPUS
     list = []
     testcase = witness_DIR + SEP + os.path.basename(C_FILE) + ".graphml"
     if (not (os.path.isfile(testcase) == True)):
-        logWord = "Procceding"
+        logWord = "Proceeding"
         printLogWord(logWord)
         RandomSeed()
     else:
@@ -337,147 +415,182 @@ def ConvertInitialSeed():
                 for item in child:
                     if item.attrib['key'] == 'startline':
                         startLine = int(item.text)
+                        # print ("startline", startLine)
+                        # list.append(startLine)
                     elif item.attrib['key'] == 'assumption':
                         assumption = item.text
                         # assumption => threadid = %d;
                         try:
-                            _, right = assumption.split("=")
-                            # right => %d;
+                            var, right = assumption.split("=")
+                            strip1=var.strip()
+                            if strip1=="threadid":
+                                continue
                             left, _ = right.split(";")
-                            # left => %d
-                            list.append(left.strip())
+                            Item=left.strip()
+                            list.append(int(Item))
                         except:
                             pass
         if len(list) == 0:
             return
-        count = 1
-        with open(os.path.join(EBF_CORPUS, 'id-' + getRandomAlphanumericString()), "w") as output:
-            for data in list:
-                output.write(''.join(str(data)))
-                output.write("\n")
-            count += 1
+        #count = 1
+        print("list",list)
+        new_list=[]
+        # Create bytearray
+        # (sequence of values in binary form)
+        # ASCII for A,B,C,D
+        for item in list:
+            bytesval=item.to_bytes(16, byteorder='big',signed=True) 
+            new_list.append(bytesval) 
+        #print("bytesvaltss\n",new_list)
+        # Bytearray can be cast to bytes
+        # Write bytes to file
+        with open(os.path.join(EBF_CORPUS, 'id-' + getRandomAlphanumericString()), "wb") as output:
+            output.write(bytesval)
 
-
+# This function will create a random numbers if ESBMC failed to do (if we activate the assert 0 this almost rare to happen)
 def RandomSeed():
-    global EBF_CORPUS, seed,BMC_Engine
+    global EBF_CORPUS, seed
+    # TODO: Make each file contains 100 value
     if [f for f in os.listdir(EBF_CORPUS) if not f.startswith('.')] == []:
-        print("There is no Testcases generated From " + BMC_Engine + " ..Proceed to random inputs!\n\n")
-        random.seed(seed)
-        randomlist = random.sample(range(0, 5000), 15)
-        n = len(randomlist)
-        num_files = 5
-        char_limit_per_file = n // num_files
+        print("There is no Testcases generated From BMC ..Proceed to random inputs!\n\n")
+       # random.seed(seed)
+        #randomlist = random.sample(range(0, 5000), 15)
+        size = 10000
+        some_bytes = os.urandom(size) 
+        num_files = 1
         file_count = 1
-        chunk_index = 0
         while file_count <= num_files:
-            new_folder = 'id-' + getRandomAlphanumericString()
-            with open(os.path.join(EBF_CORPUS, new_folder), mode="w") as out_file:
-                for line in randomlist[chunk_index:chunk_index + char_limit_per_file]:
-                    out_file.write(''.join(str(line)))
-                    out_file.write("\n")
-
-            chunk_index += char_limit_per_file
+            new_folder = 'id-' + str(file_count)
+            with open(os.path.join(EBF_CORPUS, new_folder), mode="wb") as binary_file:
+                # Write bytes to file
+                binary_file.write(some_bytes)
             file_count += 1
 
+# This function will check if the seeds are dublicated and remove the sublicated files
+def corpusContentChecking():
+    global EBF_CORPUS
+    print("check if there is duplicated files")
+    filelist = os.listdir(EBF_CORPUS)
+    unique_files = dict()
+    for file in filelist:
+        file_path = Path(os.path.join(EBF_CORPUS, file))
+        Hash_file = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
+        # Converting all the content of
+        # our file into md5 hash
+        try:
+            if Hash_file not in unique_files:
+                unique_files[Hash_file] = file_path
+            else:
+            # If file hash has already #
+            # been added we'll simply delete that file
+                os.remove(file_path)
+        except:
+            pass
 
+# This function will run AFL++ with the pass and runtime library
 def runAFL():
-    global EBF_EXEX, C_FILE, OUTDIR, EBF_INSTRAMENTATION, AFL_DIR, RUN_LOG, TIMEOUT_AFL, start_time, AFL_COMPILER_DIR, preprocessed_c_file, pre_C_File, AFL_Bin, AFL_FUZZ_Bin, AflExexutableFile
-    if os.path.exists(EBF_EXEX):
-        shutil.rmtree(EBF_EXEX)
-    os.mkdir(EBF_EXEX)
-    pre_C_File = EBF_DIR + SEP + "input.c"
-    preprocessed_c_file = "cat " + C_FILE + " | sed -e 's/\<__inline\>//g' >  processed1 "
-    preprocessed_c_file2 = "cat  processed1 | sed -e 's/\<inline\>//g' > " + pre_C_File
-    os.system(preprocessed_c_file)
-    os.system(preprocessed_c_file2)
-    os.remove("processed1")
-    Found_large_thread=False
-    with open(pre_C_File,'r') as f1:
-        red=f1.read()
-        Found_large_thread='pthread_t t1_ids[10000]' in red or 'pthread_t t_ids[10000]' in red
-    if Found_large_thread:
-        runRegix=EBF_SCRIPTS+SEP+'Instrumrntation.py'
-        RunInstra="python3 " + runRegix +  ' ' + pre_C_File +  ' -E ' + EBF_EXEX
-        os.system(RunInstra)
-    elif  'while(1) { pthread_create(&t, 0, thr1, 0)' in red or 'while(1) pthread_create(&t, 0, thr1, 0)' in red:
-           print('contains large number of threads')
-           return
-    curTime = time.time()
-    timeElapsed = curTime - start_time
-    if (not ((os.path.isfile(EBF_LIB + SEP + "libmylib.a") == True) and (
-            os.path.isfile(EBF_LIB + SEP + "libmylibFunctions.a") == True))):
-        exitMessage = " Either libmylib.a or libmylibFunctions.a File doesn't exist in " + EBF_LIB + "!!"
-        sys.exit(exitMessage)
-    aflFlag = "AFL_BENCH_UNTIL_CRASH=1 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 "
-    if os.path.exists(AFL_DIR):
-        shutil.rmtree(AFL_DIR)
-    os.mkdir(AFL_DIR)
-    Executable = os.path.splitext(os.path.basename(C_FILE))[0] + "_AFL"
-    SetAnv = "AFL_CC"
-    if SetAnv in os.environ:
-        pass
-    else:
-        if path.exists('/usr/bin/clang-10'):
-            os.environ["AFL_CC"] = "/usr/bin/clang-10"
+    global EBF_EXEX, C_FILE,category_property ,OUTDIR, EBFـINSTRUMENTATION, AFL_DIR, RUN_LOG, TIMEOUT_AFL, start_time, AFL_COMPILER_DIR, preprocessed_c_file, pre_C_File, AFL_Bin, AFL_FUZZ_Bin, AflExexutableFile
+    if category_property=='reach':
+        extention_format=os.path.splitext(os.path.basename(C_FILE))[1]
+        pre_C_File = EBF_DIR + SEP + "input"+extention_format
+        preprocessed_c_file = "cat " + C_FILE + " | sed -e 's/\<__inline\>//g' >  preprocessed1 "
+        preprocessed_c_file2 = "cat  preprocessed1 | sed -e 's/\<inline\>//g' > " + pre_C_File 
+        os.system(preprocessed_c_file)
+        os.system(preprocessed_c_file2)
+        os.remove('preprocessed1')
+        curTime = time.time()
+        timeElapsed = curTime - start_time
+        fuzzTime = float(TIMEOUT_AFL) - (timeElapsed) - 60
+        if (not ((os.path.isfile(EBF_LIB + SEP + "libmylib.a") == True) and (
+                os.path.isfile(EBF_LIB + SEP + "libmylibFunctions.a") == True))):
+            exitMessage = " Either libmylib.a or libmylibFunctions.a File doesn't exist in " + EBF_LIB + "!!"
+            sys.exit(exitMessage)
+        aflFlag = "AFL_BENCH_UNTIL_CRASH=1 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 AFL_SKIP_CPUFREQ=1 "
+        if os.path.exists(AFL_DIR):
+            shutil.rmtree(AFL_DIR)
+        os.mkdir(AFL_DIR)
+        Executable = os.path.splitext(os.path.basename(C_FILE))[0] + "_AFL"
+        SetAnv = "AFL_CC"
+        if SetAnv in os.environ:
+            pass
         else:
-            print(" Please set the environment \n export AFL_CC= clang-10")
-            os.environ["AFL_CC"] = "/usr/bin/clang-10"
-    AflExexutableFile = EBF_EXEX + SEP + Executable
-    RunAfl = " AFL_LLVM_THREADSAFE_INST=1 " + AFL_Bin + Optimization + Compile_Flag + EBF_INSTRAMENTATION + pre_C_File + " " + \
-             " -lpthread " + "-L" + EBF_LIB + SEP + " -lmylib -lmylibFunctions" + ' -o ' + EBF_EXEX + SEP + Executable + " 1> " + EBF_LOG + SEP + "AflCompile.log" + " 2> " + EBF_LOG + SEP + "AflCompileError.log"
-    os.system(RunAfl)
-    if PARALLEL_FUZZ:
-        creatingPOol()
-    elif CONCURRENCY:
-        runTSAN()
-    else:
-        logWord = "Invoking the Concurrency-aware Fuzzer"
+            if path.exists('/usr/bin/clang-11'):
+                os.environ["AFL_CC"] = "/usr/bin/clang-11"
+            else:
+                print(" Please set the environment \n export AFL_CC= clang-11")
+                os.environ["AFL_CC"] = "/usr/bin/clang-11"
+        AflExexutableFile = EBF_EXEX + SEP + Executable
+        RunAfl = " AFL_LLVM_THREADSAFE_INST=1 " + AFL_Bin + Optimization + Compile_Flags + EBFـINSTRUMENTATION + pre_C_File + " " + \
+                 " -lpthread " + "-L" + EBF_LIB + SEP + " -lmylib -lmylibFunctions " + ' -o ' + EBF_EXEX + SEP + Executable + " 1> " + EBF_LOG + SEP + "AflCompile.log" + " 2> " + EBF_LOG + SEP + "AflCompileError.log"
+        os.system(RunAfl)
+        PARALLEL_FUZZ=''
+        if PARALLEL_FUZZ:
+            creatingPOol()
+        else:
+            logWord = "Invoking Fuzz Engine"
+            printLogWord(logWord)
+            ExecuteAfl = aflFlag + " timeout -k 2s " + str(
+                TIMEOUT_AFL) + " " + AFL_FUZZ_Bin + " -i  " + EBF_CORPUS + " -o " + AFL_DIR + " -m none -t 3000+ -- " + AflExexutableFile + ' ' + " 1> " + EBF_LOG + SEP + "AflRun.log" + " 2> " + EBF_LOG + SEP + "AflrunError.log"
+            SetAflenv()
+            os.system(ExecuteAfl)
+        with open(EBF_LOG + SEP + "AflrunError.log", 'r') as f:
+            print("ErrorLog")
+            out = f.read()
+            print(out)
+        with open(EBF_LOG + SEP + "AflRun.log", 'r') as f:
+            print("Log")
+            out = f.read()
+            print(out)
+        logWord = "Compiling the instrumented code"
         printLogWord(logWord)
-        ExecuteAfl = aflFlag + " timeout -k 2s " + str(
-            TIMEOUT_AFL) + " " + AFL_FUZZ_Bin + " -i  " + EBF_CORPUS + " -o " + AFL_DIR + " -m none -t 3000+ -- " + AflExexutableFile + ' ' + " 1> " + EBF_LOG + SEP + "AflRun.log" + " 2> " + EBF_LOG + SEP + "AflrunError.log"
-        SetAflenv()
-        os.system(ExecuteAfl)
-
-
-
-    logWord = "Compiling the instrumented code"
-    printLogWord(logWord)
+    else:
+        return
 
 
 def creatingPOol():
-    global found_event,finished_process,AFL_DIR
+    global found_event,AFL_DIR
 
     with Pool(3) as p:  # choose appropriate level of parallelism
+        # choose appropriate command and argument, can be fetched from sys.argv if needed
+       # t1 = time.time()
         exit_codes = p.map(ParallelFuzzing, [('-M', 'fuzzer01', 'AflRun.log'), ('-S', 'fuzzer02', 'AflRun1.log'),('-S', 'fuzzer03', 'AflRun2.log')])
         found_event.wait()
         for subb, diree, files in os.walk(AFL_DIR):
             if subb == AFL_DIR + SEP + 'fuzzer01/crashes' or subb == AFL_DIR + SEP + 'fuzzer02/crashes' or subb == AFL_DIR + SEP + 'fuzzer03/crashes':
                  crashingTestList = os.listdir(subb)
                  if len(crashingTestList) != 0:
+
                      crashingTestList.sort(reverse=True)
                      for t in crashingTestList:
                          if (t.startswith("id:")):
                             p.terminate()
-
-
         p.close()
         p.join()
 
 
+
+def limit_virtual_memory():
+    # The tuple below is of the form (soft limit, hard limit). Limit only
+    # the soft part so that the limit can be increased later (setting also
+    # the hard limit would prevent that).
+    # When the limit cannot be changed, setrlimit() raises ValueError.
+    resource.setrlimit(resource.RLIMIT_AS, (MAX_VIRTUAL_MEMORY, resource.RLIM_INFINITY))
+
+
+# This function will run AFL if we set it to parallel fuzring.
 def ParallelFuzzing(inputs):
-    global EBF_EXEX, C_FILE, OUTDIR, EBF_INSTRAMENTATION, AFL_DIR, RUN_LOG, TIMEOUT_AFL, start_time, AFL_COMPILER_DIR, preprocessed_c_file, pre_C_File, AFL_Bin, AFL_FUZZ_Bin, AflExexutableFile,found_event,finished_process
+    global EBF_EXEX, C_FILE, OUTDIR, EBFـINSTRUMENTATION, AFL_DIR, RUN_LOG, TIMEOUT_AFL, start_time, AFL_COMPILER_DIR, preprocessed_c_file, pre_C_File, AFL_Bin, AFL_FUZZ_Bin, AflExexutableFile,found_event
     logWord = "Invoking Parrallel Fuzzing"
     printLogWord(logWord)
     (nodes, outdir, logfile1) = inputs
 
     print("Starting node :{} with outdir {} and logfile {}".format(nodes, outdir, logfile1))
-    ExecuteAfl = "AFL_BENCH_UNTIL_CRASH=1 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 " + " timeout -k 2s " + str(
-        TIMEOUT_AFL) + " " + AFL_FUZZ_Bin + " -i  " + EBF_CORPUS + " -o " + AFL_DIR + ' ' + nodes + ' ' + outdir + " -m none -t 3000+ -- " + AflExexutableFile + '' + " 1> " + EBF_LOG + SEP + logfile1 + " 2> " + EBF_LOG + SEP + "AflrunError.log"
+    ExecuteAfl = " AFL_BENCH_UNTIL_CRASH=1 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 AFL_SKIP_CPUFREQ=1 " + " timeout -k 2s " + str(
+        TIMEOUT_AFL) + " " + AFL_FUZZ_Bin + " -i  " + EBF_CORPUS + " -o " + AFL_DIR + ' ' + nodes + ' ' + outdir + " -m none -t 3000+ -- " + AflExexutableFile + '  ' + " 1> " + EBF_LOG + SEP + logfile1 + " 2> " + EBF_LOG + SEP + "AflrunError.log"
     final = subprocess.Popen("{}".format(ExecuteAfl), shell=True, universal_newlines=True,
-                             preexec_fn=limit_virtual_memory_AFL)
+                             preexec_fn=limit_virtual_memory)
     final.communicate()
     found_event.set()
-
 
 def SetAflenv():
     global RUN_STATUS_LOG
@@ -491,20 +604,14 @@ def SetAflenv():
         os.system(displayresults)
         exit(0)
 
+
 def runTSAN():
-    global Tsanitizer, EBF_EXEX, C_FILE, EBF_LOG, EBF_LIB, EBF_INSTRAMENTATION, TIMEOUT_TSAN, start_time,EXTRA
-    PATHS=''
-    if EXTRA:
-        for iarg in EXTRA:
-            PATHS= PATHS+ " " + iarg
-        Include="-I"+ f'{PATHS.lstrip()}'
-    else:
-        Include=''
-        print("No extra includes provided\n")
+    global Tsanitizer, EBF_EXEX, C_FILE, EBF_LOG, EBF_LIB, EBFـINSTRUMENTATION, TIMEOUT_TSAN, start_time
+    curTime = time.time()
+    timeElapsed = curTime - start_time
     ExecutableTsan = os.path.splitext(os.path.basename(C_FILE))[0] + "_TSAN"
-    CompileTasan = Compiler + Optimization + Tsanitizer + " " + C_FILE  + " "+ Include +"  -lpthread " + EBF_LIB + SEP + "atomics.c " + EBF_LIB + SEP + "nondet_rand.c " + ' -o ' + EBF_EXEX + SEP + ExecutableTsan + " 1> " + EBF_LOG + SEP + "TsanCompile.log" + " 2> " + EBF_LOG + SEP + "TasanCompileError.log"
+    CompileTasan = Compiler + Optimization + Tsanitizer + " " + C_FILE + "  -lpthread " + EBF_LIB + SEP + "atomics.c " + EBF_LIB + SEP + "nondet_rand.c " + ' -o ' + EBF_EXEX + SEP + ExecutableTsan + " 1> " + EBF_LOG + SEP + "TsanCompile.log" + " 2> " + EBF_LOG + SEP + "TasanCompileError.log"
     TSANExexutableFile = EBF_EXEX + SEP + "./" + ExecutableTsan
-    print("TSAN com",CompileTasan)
     RunTsan = " timeout -k 2s " + str(
         TIMEOUT_TSAN) + " " + TSANExexutableFile + " 1> " + EBF_LOG + SEP + "TsanRun.log" + " 2> " + EBF_LOG + SEP + "TsanRunError.log"
     os.system(CompileTasan)
@@ -512,18 +619,35 @@ def runTSAN():
     logWord = "Runing Sanitizer"
     printLogWord(logWord)
 
-
-def checkbothFiles(files):
-    if len(files) != 2:
-        return False
-    file1 = files[0].startswith("witnessInfoAFL-") or files[0].startswith("seedValue-")
-    file2 = files[1].startswith("witnessInfoAFL-") or files[1].startswith("seedValue-")
-    return file1 and file2
+def check_if_reach_error():
+    for file in os.listdir(witness_DIR):
+        if file.startswith("witnessInfoAFL-"):
+            file_path = f"{witness_DIR}/{file}"
+            check=open(file_path,'r')
+            read=check.read()
+            if "REACH_ERROR END" in read:
+                return False
 
 
 def AnalaysResults():
     global RUN_LOG, AFL_DIR, RUN_STATUS_LOG
+    PARALLEL_FUZZ=''
     if PARALLEL_FUZZ:
+        get_current=os.getcwd()
+        os.chdir(EBF_LOG)
+        for file in os.listdir():
+            if file.startswith("AflRun"):
+                file_path = f"{EBF_LOG}/{file}"
+                checkLog = open(file_path, 'r')
+                read1 = checkLog.read()
+                if 'outright crash' in read1:
+                    if check_if_reach_error() == False:
+                        RUN_LOG.write("False(outright)\n")
+                    else:
+                        RUN_LOG.write("unknown\n")
+                os.chdir(get_current)
+                return
+        os.chdir(get_current)
         crashDir = AFL_DIR
         logWord = "Checking logs"
         printLogWord(logWord)
@@ -537,20 +661,14 @@ def AnalaysResults():
                 crashingTestList = os.listdir(subb)
                 if len(crashingTestList) != 0:
                     crashingTestList.sort(reverse=True)
+                    # ''.join(sorted(subb))
                     for t in crashingTestList:
                         if (t.startswith("id:")):
                             RUN_LOG.write("False(reach)\n")
                             return
         RUN_LOG.write("UNKNOWN\n")
         return
-    elif CONCURRENCY:
 
-        checkTSAN = open(EBF_LOG + SEP + "TsanRunError.log", "r")
-        read3 = checkTSAN.read()
-        if 'data race' in read3:
-            RUN_LOG.write("False(reach)\n")
-        else:
-            RUN_LOG.write("UNKNOWN\n")
     else:
         checkLog = open(EBF_LOG + SEP + "AflRun.log", 'r')
         read1 = checkLog.read()
@@ -560,6 +678,12 @@ def AnalaysResults():
         crashingTestList = os.listdir(crashDir)
         if '.DS_Store' in crashingTestList:
             crashingTestList.remove('.DS_Store')
+        if 'outright crash' in read1:
+            if check_if_reach_error() == False:
+                RUN_LOG.write("False(outright)\n")
+            else:
+                RUN_LOG.write("unknown\n")
+            return
         if len(crashingTestList) != 0:
             crashingTestList.sort(reverse=True)
             logWord = "Checking logs"
@@ -575,40 +699,17 @@ def AnalaysResults():
 def AnalaysResultsBMC():
     checkBMC = open(EBF_LOG + SEP + "runCompiBMC.log", 'r')
     read2 = checkBMC.read()
-    if BMC_Engine =='CBMC':
-            #TODO check the BMC options and based on that check the result values.
-        if "FALSE" in read2:
-            if "FALSE" in read2 and "reason for conflict" in read2:
-                RUN_LOG.write("UNKNOWN\n")
-            else:
-                RUN_LOG.write("False(reach)\n")
-        elif "TRUE" in read2:
-            RUN_LOG.write("true\n")
-        else:
+    if "FALSE_REACH" in read2:
+        if "FALSE" in read2 and "reason for conflict" in read2:
             RUN_LOG.write("UNKNOWN\n")
-    elif BMC_Engine =="ESBMC":
-         if "FALSE_REACH" in read2:
-             RUN_LOG.write("False(reach)\n")
-         elif "TRUE" in read2:
-             RUN_LOG.write(" true\n")
-         else:
-             RUN_LOG.write("UNKNOWN\n")
-    elif BMC_Engine=='CSEQ':
-        if "FALSE" in read2:
+        else:
             RUN_LOG.write("False(reach)\n")
-        elif "SAFE" in read2:
-            RUN_LOG.write(" true\n")
-        else:
-            RUN_LOG.write("UNKNOWN\n")
-
-    elif BMC_Engine =='DEAGLE':
-        if "VERIFICATION FAILED" in read2:
-            RUN_LOG.write("False(reach)\n")
-        elif "VERIFICATION SUCCESSFUL" in read2:
-            RUN_LOG.write(" true\n")
-        else:
-            RUN_LOG.write("UNKNOWN\n")
-
+    elif "TRUE" in read2:
+        RUN_LOG.write(" true\n")
+    elif "FALSE_OVERFLOW" in read2:
+        RUN_LOG.write(" False(overflow)\n")
+    else:
+        RUN_LOG.write("UNKNOWN\n")
 
 def TSANConfirm():
     runTSAN()
@@ -616,40 +717,54 @@ def TSANConfirm():
     read3 = checkTSAN.read()
     if "thread leak" in read3:
         return True
-    return False
 
+    return False
 
 def displayOutcome():
     global RUN_LOG, witness_DIR
     i = 0
-    AFL_Results = 0
-    BMC_Results=0
+    AFL_Results = "unknown"
+    ESBMC_Results="unknown"
     RUN_LOG.close()
+
     with open(EBF_LOG + SEP + "run.log", "r") as f:
         for line in f:
             word = line.strip()
             if word:
                 if i == 0:
                     if word == 'False(reach)':
-                        AFL_Results = 1
+                        AFL_Results = "False"
+                    elif word == 'False(outright)':
+                        AFL_Results = "outright crash"
                 elif i == 1:
                     if word == 'False(reach)':
-                        BMC_Results = 1
+                        ESBMC_Results = "False"
                     elif word == 'true':
-                        BMC_Results = 2
+                        ESBMC_Results = 'true'
+                    elif word == 'False(overflow)':
+                        ESBMC_Results = 'False(overflow)'
+
+
             i += 1
-    print("value from afl and bmc results", AFL_Results,BMC_Results,"\n")
-    if BMC_Results == 2:
+    print("Results from afl ", f"{bcolors.OKBLUE}" + AFL_Results + f"{bcolors.ENDC}", "and from BMC_Results",f"{bcolors.OKBLUE}" + ESBMC_Results + f"{bcolors.ENDC}\n\n")
+    # if esbc true and Afl unknown then true
+    if ESBMC_Results == 'true':
         print(f"{bcolors.OKGREEN}VERIFICATION TRUE\n\n{bcolors.ENDC}")
-    elif BMC_Results == 1 or  AFL_Results == 1 or AFL_Results == 3:
+        #if afl is false and bmc did not say its a true then it false
+    elif ESBMC_Results == "False" or  AFL_Results == "False" or AFL_Results == "outright crash":
         print(f"{bcolors.FAIL}FALSE(reach)\n\n{bcolors.ENDC}")
+    elif ESBMC_Results == 'False(overflow)':
+        print(f"{bcolors.FAIL}FALSE(overflow)\n\n{bcolors.ENDC}")
     else:
         print(f"{bcolors.WARNING}UNKNOWN\n\n {bcolors.ENDC}")
+
+
+# This function will check the log and decide which witness type should be returned. 
 
 def correction_witness():
     global RUN_LOG
     i = 0
-    BMC_Results = 0
+    ESBMC_Results = 0
     AFL_Results = 0
     RUN_LOG.close()
     with open(EBF_LOG + SEP + "run.log", "r") as f:
@@ -659,48 +774,53 @@ def correction_witness():
                 if i == 0:
                     if word == 'False(reach)':
                         AFL_Results = 1
+                    elif word == 'False(outright)':
+                        AFL_Results = 3
                 elif i == 1:
                     if word == 'False(reach)':
-                        BMC_Results = 1
+                        ESBMC_Results = 1
                     elif word == 'true':
-                        BMC_Results = 2
+                        ESBMC_Results = 2
+                    elif word == 'False(overflow)':
+                        ESBMC_Results = 3
             i += 1
-    if AFL_Results == 1:
-        return False
-    elif BMC_Results == 1:
+    if ESBMC_Results == 2:
+        f.close()
+        return True
+    elif AFL_Results == 1 or AFL_Results == 3 or ESBMC_Results == 1 or ESBMC_Results == 3:
+        f.close()
         return False
     else:
         f.close()
         return True
 
 
+# This function will move the files that contains witness info to the witness directory.
 def witnessFile_pre():
-    a = ''
     global witness_DIR, correction_witness
     Source = os.getcwd()
-    try:
-        with open("AFLCRASH", 'r') as f:
-            lines = [line.strip() for line in f]
-            if len(lines) == 1:
-                a = lines[0]
-    except:
-        a = ' '
-    print("Crash Process ID is", a+"\n")
-    try:
-        print("Removing AFLCRASH File ..")
-        os.remove('AFLCRASH')
-    except:
-        print('we could not remove AFLCRASH file\n')
+    # Moves every witness into the Results folder
     for file in os.listdir(Source):
+        if file.startswith("witnessInfoAFL-"):
+            with open(file) as infile, open(os.path.join(witness_DIR, file), "w") as outfile:
+                copy = False
+                for line in infile:
+                    if line.strip() == "BEGIN":
+                        bucket = []
+                        copy = True
+                    elif line.strip() == "REACH_ERROR END":
+                        for strings in bucket:
+                            outfile.write( strings + '\n')
+                        outfile.write('REACH_ERROR END\n')
+                        copy = False
+                    elif copy:
+                        bucket.append(line.strip())
+            os.remove(file)
+        if file.startswith("nondetInputs-"):
+            shutil.move(os.path.join(Source, file), os.path.join(witness_DIR, file))
+        
 
-        if file.startswith("witnessInfoAFL-") or file.startswith("seedValue-") or file.startswith(
-                "seedValueTSAN") or file.startswith("witnessInfoTSAN"):
-            if file.endswith(a):
-                shutil.move(os.path.join(Source, file), os.path.join(witness_DIR, file))
-            else:
-                os.remove(file)
-
-
+# This function will decide the type of witness and run WitnessFile.py which will generate the witness
 def witnessFile():
     a = ''
     global witness_DIR, correction_witness
@@ -721,11 +841,14 @@ def main():
     processCommandLineArguements()
     initializeDir()
     HeaderContent()
+    initial_analyze()
     RunBMCEngine()
-    ConvertInitialSeed()
+    ConvertInitialSeed(witness_DIR)
     RandomSeed()
     startLogging()
+    corpusContentChecking()
     runAFL()
+    #runTSAN()
     witnessFile_pre()
     AnalaysResults()
     AnalaysResultsBMC()
@@ -737,10 +860,6 @@ def main():
     hours, rem = divmod(elapsed_time, 3600)
     minutes, seconds = divmod(rem, 60)
     print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds))
-
-
-
-
 
 
 if __name__ == "__main__":

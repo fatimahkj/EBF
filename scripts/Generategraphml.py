@@ -6,16 +6,6 @@ import hashlib
 from Extract_assumptions import __getNonDetAssumptions__
 
 
-
-
-def create_key_node(_id, _name, _type, _for):
-    elem = ET.Element("key", id=_id)
-    elem.set("attr.name", _name)
-    elem.set("attr.type", _type)
-    elem.set("for", _for)
-    return elem
-
-
 class Value:
     def __init__(self, var_name, line, value, threadid, function_name):
         self.var_name = var_name
@@ -27,10 +17,10 @@ class Value:
 
     
     def generate_assumption(self):
-        return ""
+        #return ""
         if(self.var_name == ""):
             return self.value
-#if we want to remove ; after a=value
+        #if we want to remove ; after a=value
         #return self.value[:-1]
         return (str(self.var_name) + "=" + str(self.value) )
 
@@ -245,62 +235,30 @@ class ViolationGraph:
         elem = self._create_initial_edge()
         self.graph.append(elem)
 
-    def read_values_from_cbmc(self):
-        #print("\n\nesbmc witness inside read_values ",self.witness_esbmc)
-        if os.path.exists(self.witness_bmc):
-            #print("\n\nesbmc witness ",self.witness_esbmc)
-           # from_cbmc = __getNonDetAssumptions__(self.witness_cbmc)
-           # values = [ Value("",str(x.line),x.assumption,x.threadid,"") for x in from_cbmc ]
-            with open(self.witness_bmc, 'r') as CBMCconterExample:
-
-                CheckInfo = CBMCconterExample.read()
-                if len(CheckInfo) == 0:
-                    CheckInfo = None
-                    raise RuntimeError("\nThe witness is empty")
-
-            p = re.compile("State \d* file .* function (.*) line (\d+) thread (\d+)")
-            result = p.findall(CheckInfo)
-            values = [Value( "", str(b), "", c, a) for (a, b, c) in result]
-            #get first element in the list in position 0 then inside for loop look if the current value is equal values
-            #then if its equal we can remove the item the x
-            return values
-# the 3rd is the assemption
-        raise RuntimeError("\nCouldn't find the CBMC witness")
-
     def read_values_from_ebf(self, file_prefix):
         if not os.path.exists(self.witness_dir):
             print (self.witness_dir, "\ndirectory is not exist")
             exit(0)
-
         found_witness_afl = False
         for file in os.listdir(self.witness_dir):
             if file.startswith(file_prefix):
-                #print("Found " + file_prefix)
                 found_witness_afl = True
                 with open(os.path.join(self.witness_dir, file), 'r') as AlfWitnessFile:
-
                     CheckInfo = AlfWitnessFile.read()
                     if len(CheckInfo)==0:
                         CheckInfo=None
                         raise RuntimeError("\nThe witness is empty")
-
         if not found_witness_afl:
-            #print ("\nCouldn't find a witness with prefix " + file_prefix)
             raise RuntimeError("\nCouldn't find a witness")
 
         p = re.compile("Setting variable: (.*) in Line number (.*) with value: (.*) running from thread: (.*) in function: (.*) with address:(.*)" )
         result = p.findall(CheckInfo)
-        values = [ Value(a,b,c,d,e) for (a,b,c,d,e,_) in result if a != 'Could not find variable name!']
-
+        values = [ Value(a,b,c,d,e) for (a,b,c,d,e,_) in result]
         return values
-
-    def read_values_from_tsan(self):
-        return self.read_values_from_ebf('witnessInfoTSAN')
-
-
+    #This function will read the assumptions values from witnessInfoAFL generated from AFL 
     def read_values_from_afl(self):
         return self.read_values_from_ebf('witnessInfoAFL')
-
+    #This function will extract the assumptions values from ESBMC witness file
     def read_values_from_ESBMC(self):
         print("Found Values from ESBMC")
         if os.path.exists(self.witness_bmc):
@@ -308,6 +266,22 @@ class ViolationGraph:
             values = [ Value("",str(x.line),x.assumption,x.threadid,"") for x in from_esbmc ]
             return values
         raise RuntimeError("\nCouldn't find the ESBMC witness")
+
+    #This function will extract the assumptions values from CBMC counter example using regex. 
+    def read_values_from_cbmc(self):
+        if os.path.exists(self.witness_bmc):
+            with open(self.witness_bmc, 'r') as CBMCconterExample:
+                CheckInfo = CBMCconterExample.read()
+                if len(CheckInfo) == 0:
+                    CheckInfo = None
+                    raise RuntimeError("\nThe witness is empty")
+            p = re.compile("State \d* file .* function (.*) line (\d+) thread (\d+)")
+            result = p.findall(CheckInfo)
+            values = [Value( "", str(b), "", c, a) for (a, b, c) in result]
+            return values
+        raise RuntimeError("\nCouldn't find the CBMC witness")
+        
+    #This function will extract the assumptions values from Cseq witness. 
     def read_values_from_CSEQ(self):
         print("Found Values from CSEQ")
         if os.path.exists(self.witness_bmc):
@@ -315,7 +289,7 @@ class ViolationGraph:
             values = [ Value("",str(x.line),x.assumption,x.threadid,"") for x in from_cseq ]
             return values
         raise RuntimeError("\nCouldn't find the CSEQ witness")
-
+    #This function will extract the assumptions values from DEAGLE witness. 
     def read_values_from_DEAGLE(self):
         print("Found Values from DEAGLE")
         if os.path.exists(self.witness_bmc):
@@ -325,50 +299,36 @@ class ViolationGraph:
         raise RuntimeError("\nCouldn't find the DEAGLE witness")
 
 
+    # This function will generate the values for the witness.
+    # First, it will check if AFL generate values, if not it will check which BMC engine we used then will generate the values in the witness
 
     def create_witness_from_tools(self, witness_DIR):
-        # AFL -> Thread -> ESBMC
+        # AFL -> ESBMC
         # Try parsing AFL
-
         try:
             values = self.read_values_from_afl()
             print("Found AFL values")
+
         except Exception as e:
-            #print(e)
-            #print ("\nCouldn't find any values from AFL")
-            # Try parsing TSAN
             try:
-                values = self.read_values_from_tsan()
-                print("Found TSAN values")
-
-            except Exception as e:
-                #print(e)
-                #print ("\n Couldn't find any values from TSAN ")
-                # Try parsing ESBMC
-                try:
-                    if self.BMC_Engine=='CBMC':
-
-                        values = self.read_values_from_cbmc()
-                        print("Found CBMC values")
-                    elif self.BMC_Engine=='ESBMC':
-                        values=self.read_values_from_ESBMC()
-                    elif self.BMC_Engine=="CSEQ":
-                        values=self.read_values_from_CSEQ()
-                    elif self.BMC_Engine=='DEAGLE':
-                        values=self.read_values_from_DEAGLE()
-
+                if self.BMC_Engine=='CBMC':
+                    values = self.read_values_from_cbmc()
+                    print("Found CBMC values")
+                elif self.BMC_Engine=='ESBMC':
+                    values=self.read_values_from_ESBMC()
+                elif self.BMC_Engine=="CSEQ":
+                    values=self.read_values_from_CSEQ()
+                elif self.BMC_Engine=='DEAGLE':
+                    values=self.read_values_from_DEAGLE()
                 # Couldn't find any witness, generate an empty violation (maybe dangerous, should be certain that at leas one of tools found a bug)
-                except Exception as e:
-                    print(e)
-                    print ("Couldn't find any values from BMC ")
-                    values = []
-        #remove commented values if you want an empty witness
-        #values = []
+            except Exception as e:
+                print(e)
+                print ("Couldn't find any values from ",self.BMC_Engine )
+                values = []
         if values is None:
             values = []
         self.values_length=len(values)
         for V in values:
-            #print( V.generate_assumption(), V.threadid,V.line)
             elem = self.add_node()
             self.graph.append(elem)
             edge = self.create_edge(V.line, V.generate_assumption(), V.threadid)
@@ -412,7 +372,7 @@ class ViolationGraph:
 
         ET.SubElement(edge, "data", key="threadId").text=self.find_thread(thread)
         ET.SubElement(edge, "data", key="startline").text=line
-        #ET.SubElement(edge, "data", key="assumption").text=assumption
+        ET.SubElement(edge, "data", key="assumption").text=assumption
         #ET.SubElement(edge, "data", key="threadId").text=thread
 
         return edge
@@ -420,15 +380,14 @@ class ViolationGraph:
     def save_witness(self, witness_file_name):
         ViolationGraph.make_node_violation(self.LastNode)
 
-        #self.xml.getroot().set("enconding", "2134")
         dom = minidom.parseString(ET.tostring(self.xml))
-        #xml_string = dom.toprettyxml(encoding="utf-8")
         xml_string = dom.toprettyxml(encoding="utf-8")
 
 
         with open (witness_file_name, "wb") as files :
             files.write(xml_string)
             files.close()
+            
     def removeCBMC_witness(self, witness_file_name_CBMC):
         if  os.path.isfile(witness_file_name_CBMC):
             os.remove(witness_file_name_CBMC)

@@ -12,9 +12,8 @@ EBF_PATH=EBF_DIR+SEP+"lib"
 #OUTDIR = EBF_DIR + SEP + "EBF_Results"
 witness_DIR=""
 ESBMC_DIR=EBF_DIR + SEP+"bin"
-BMCtimeout=''
-MEM_LIMIT_ESBMC = ''
-
+timeout ="420s"
+MEM_LIMIT_ESBMC = 8
 import sys
 import resource
 
@@ -39,7 +38,6 @@ class Result:
 
   @staticmethod
   def is_fail(res):
-    global BMCtimeout,MEM_LIMIT_ESBMC
     if res == Result.fail_deref:
       return True
     if res == Result.fail_free:
@@ -58,8 +56,6 @@ class Result:
 
   @staticmethod
   def is_out(res):
-    global BMCtimeout,MEM_LIMIT_ESBMC
-    print("time inside is fail",BMCtimeout)
     if res == Result.err_memout:
       return True
     if res == Result.err_timeout:
@@ -77,9 +73,9 @@ class Property:
 
 # Function to run esbmc
 def run(cmd_line):
-  global BMCtimeout, MEM_LIMIT_ESBMC
   print("Verifying with ESBMC and generate initial seed")
   print("Command: " + cmd_line)
+
   the_args = shlex.split(cmd_line)
 
   p = subprocess.Popen(the_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -91,8 +87,8 @@ def run(cmd_line):
   return stdout
 
 def parse_result(the_output, prop):
+
   # Parse output
-  global BMCtimeout,MEM_LIMIT_ESBMC
   if "Timed out" in the_output:
     return Result.err_timeout
 
@@ -175,7 +171,6 @@ def parse_result(the_output, prop):
   return Result.unknown
 
 def get_result_string(the_result):
-  global BMCtimeout, MEM_LIMIT_ESBMC
   if the_result == Result.fail_memcleanup:
     return "FALSE_MEMCLEANUP"
 
@@ -220,8 +215,9 @@ esbmc_path =ESBMC_DIR+SEP+ "./esbmc "
 if(os.path.exists(ESBMC_DIR) == False):
     exitMessage = "bin directory is not found !!!"
     sys.exit(exitMessage)
+
 # ESBMC default commands: this is the same for every submission
-esbmc_dargs =  " --no-div-by-zero-check --force-malloc-success --state-hashing --add-symex-value-sets "
+esbmc_dargs = "--timeout " + timeout + " --memlimit " +str(MEM_LIMIT_ESBMC)+ "g --no-div-by-zero-check --force-malloc-success --state-hashing --add-symex-value-sets "
 esbmc_dargs += "--no-align-check --k-step 5 --floatbv --unlimited-k-steps "
 
 import re
@@ -233,7 +229,7 @@ def check_if_benchmark_contains_pthread(benchmark):
   return False
 
 def get_command_line(strat, prop, arch, benchmark, concurrency, dargs):
-  global witness_DIR,MEM_LIMIT_ESBMC,BMCtimeout
+  global witness_DIR
   command_line = esbmc_path + dargs
 
   # Add benchmark
@@ -253,14 +249,13 @@ def get_command_line(strat, prop, arch, benchmark, concurrency, dargs):
     #command_line += "--no-slice " # TODO: Witness validation is only working without slicing
 
   # Add witness arg
-  command_line += " --timeout " + str(BMCtimeout) +"s"+ " --memlimit " +str(MEM_LIMIT_ESBMC)+ "m --witness-output " + os.path.basename(benchmark) + ".graphml "
+  command_line += "--witness-output " + os.path.basename(benchmark) + ".graphml "
 
   # Special case for termination, it runs regardless of the strategy
   if prop == Property.termination:
     command_line += "--no-pointer-check --no-bounds-check --no-assertions "
     command_line += "--termination --max-inductive-step 3 "
     return command_line
-
   if prop == Property.overflow:
     command_line += "--no-pointer-check --no-bounds-check --overflow-check --no-assertions "
   elif prop == Property.memory:
@@ -294,9 +289,9 @@ def get_command_line(strat, prop, arch, benchmark, concurrency, dargs):
   return command_line
 
 def verify(strat, prop, concurrency, dargs):
-  global BMCtimeout,MEM_LIMIT_ESBMC
   # Get command line
   esbmc_command_line = get_command_line(strat, prop, arch, benchmark, concurrency, dargs)
+
   # Call ESBMC
   output = run(esbmc_command_line)
 
@@ -313,8 +308,6 @@ parser.add_argument("benchmark", nargs='?', help="Path to the benchmark")
 parser.add_argument("-s", "--strategy", help="ESBMC's strategy", choices=["kinduction", "falsi", "incr", "fixed"], default="fixed")
 parser.add_argument("-c", "--concurrency", help="Set concurrency flags", action='store_true')
 parser.add_argument("-w","--witnessDirectory", help='Witness directory', action='store')
-parser.add_argument("-t","--timeout", help='ESBMC timeout', action='store',default=600)
-parser.add_argument("-m","--memory", help='ESBMC memory', action='store',default=10000000)
 
 args = parser.parse_args()
 
@@ -324,9 +317,8 @@ property_file = args.propertyfile
 benchmark = args.benchmark
 strategy = args.strategy
 concurrency = args.concurrency
-BMCtimeout=args.timeout
 witness_DIR = args.witnessDirectory
-MEM_LIMIT_ESBMC=args.memory
+
 if version:
   print(os.popen(esbmc_path + "--version").read()[6:].strip()),
   exit(0)
@@ -338,6 +330,7 @@ if property_file is None:
 if benchmark is None:
   print("Please, specify a benchmark to verify")
   exit(1)
+
 # Parse property files
 f = open(property_file, 'r')
 property_file_content = f.read()
